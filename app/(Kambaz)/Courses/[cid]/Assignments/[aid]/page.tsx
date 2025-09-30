@@ -92,7 +92,7 @@ export default function AssignmentEditor() {
             </table>
 
             {/* Line */}
-            <hr style={{ width: "360px", margin: "20px 0" }} />
+            <hr style={{ width: "675px", margin: "20px 0" }} />
 
             {/* Buttons */}
             <div style={{ display: "flex", justifyContent: "center", gap: "3px" }}>
