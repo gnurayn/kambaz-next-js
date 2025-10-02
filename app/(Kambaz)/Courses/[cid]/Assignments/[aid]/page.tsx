@@ -1,103 +1,219 @@
+import { Form } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import { FaRegCalendarAlt } from "react-icons/fa";
+
+const Calendar = FaRegCalendarAlt as React.ElementType;
+
 export default function AssignmentEditor() {
     return (
         <div id="wd-assignments-editor">
-            <label htmlFor="wd-name">Assignment Name</label> <br /><br />
-            <input id="wd-name" defaultValue="A1 - ENV + HTML" /><br /><br />
-            <textarea id="wd-description">
-                The assignment is available online Submit a link to the landing page
-                of your Web application running on Netlify. The landing page should
-                include the following: Your full name and section Links to each of
-                the lab assignments Link to the Kanbaz application Links to all relevant
-                source code repositories The Kanbaz application should include a link
-                to navigate back to the landing page.
-            </textarea>
-            <br />
-            <table>
-                <div style={{ height: "20px" }} />  { }
-                <tr>
-                    <td>
-                        <label htmlFor="wd-points">Points</label>&nbsp;
-                        <input id="wd-points" defaultValue={100} />
-                    </td>
-                </tr>
+            <div className="d-flex flex-column">
+                <span>Assignment Name</span>
+                <div className="position-relative mt-2" style={{ width: "500px" }}>
+                    <Form.Control
+                        type="text"
+                        defaultValue="A1"
+                        className="ps-3"
+                        style={{
+                            color: "black",
+                            fontWeight: "normal",
+                        }}
+                    />
+                </div><br />
 
-                <div style={{ height: "20px" }} />  { }
-                <tr>
-                    <td>
-                        <label htmlFor="wd-display-grade">Display Grade as</label>&nbsp;
-                        <select id="wd-display-grade">
+                <div style={{ width: "500px" }}>
+                    <Form.Control
+                        as="textarea"
+                        defaultValue={`The assignment is available online
+
+Submit a link to the landing page of your Web application running on Netlify.
+
+The landing page should include the following:
+- Your full name and section
+- Links to each of the lab assignments
+- Link to the Kambaz application
+- Links to all relevant source code repositories
+
+The Kambaz application should include a link to navigate back to the landing page.`}
+                        style={{
+                            minHeight: "275px",
+                            fontSize: "14px",
+                            lineHeight: "1.5",
+                            whiteSpace: "pre-wrap",
+                        }}
+                    />
+
+                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "8px", gap: "8px" }}>
+                        <span>Points</span>
+                        <Form.Control
+                            type="text"
+                            defaultValue="100"
+                            style={{ width: "350px" }}
+                        />
+                    </div>
+
+                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "12px", gap: "8px" }}>
+                        <span>Assignment Group</span>
+                        <Form.Select style={{ width: "350px" }}>
+                            <option value="ASSIGNMENTS">ASSIGNMENTS</option>
+                        </Form.Select>
+                    </div>
+
+                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "12px", gap: "8px" }}>
+                        <span>Display Grade</span>
+                        <Form.Select style={{ width: "350px" }}>
                             <option value="PERCENTAGE">Percentage</option>
                             <option value="LETTER">Letter</option>
-                        </select>
-                    </td>
-                </tr>
-                <div style={{ height: "20px" }} />  { }
-                <tr>
-                    <td>
-                        <label htmlFor="wd-submission-type">Submission Type</label>&nbsp;
-                        <select id="wd-submission-type">
-                            <option value="ONLINE">Online</option>
-                        </select>
-                    </td>
-                </tr>
+                        </Form.Select>
+                    </div>
 
-                <div style={{ height: "20px" }} />  { }
-                <tr>
-                    <td>
-                        <label>Online Entry Options</label><br />
-                        <input type="checkbox" name="check-option" id="wd-chkbox-text-entry" />
-                        <label htmlFor="wd-chkbox-text-entry">Text Entry</label><br />
+                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "12px", gap: "8px" }}>
+                        <span>Submission Type</span>
+                        <div
+                            style={{
+                                border: "1px solid #ced4da",
+                                borderRadius: ".25rem",
+                                padding: "10px",
+                                width: "350px",
+                                background: "white",
+                            }}
+                        >
+                            <Form.Select style={{ marginBottom: "15px" }}>
+                                <option>Online</option>
+                            </Form.Select>
 
-                        <input type="checkbox" name="check-option" id="wd-chkbox-website-url" />
-                        <label htmlFor="wd-chkbox-website-url">Website URL</label><br />
+                            <div style={{ fontWeight: "bold", color: "black", marginBottom: "15px" }}>
+                                Online Entry Options
+                            </div>
 
-                        <input type="checkbox" name="check-option" id="wd-media-recordings" />
-                        <label htmlFor="wd-chkbox-media-recordings">Media Recordings</label><br />
+                            {[
+                                "Text Entry",
+                                "Website URL",
+                                "Media Recordings",
+                                "Student Annotation",
+                                "File Uploads",
+                            ].map((label) => (
+                                <div key={label}>
+                                    <Form.Check type="checkbox" label={label} name="submission-options" style={{ marginBottom: "15px" }} />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
 
-                        <input type="checkbox" name="check-option" id="wd-chkbox-student-annotation" />
-                        <label htmlFor="wd-chkbox-student-annotation">Student Annotation</label><br />
+                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "12px", gap: "8px" }}>
+                        <span>Assign</span>
+                        <div
+                            style={{
+                                border: "1px solid #ced4da",
+                                borderRadius: ".25rem",
+                                padding: "10px",
+                                width: "350px",
+                                background: "white",
+                            }}
+                        >
+                            <div style={{ fontWeight: "bold", color: "black", marginBottom: "5px" }}>
+                                Assign to
+                            </div>
 
-                        <input type="checkbox" name="check-option" id="wd-chkbox-file-uploads" />
-                        <label htmlFor="wd-chkbox-file-uploads">File Uploads</label>
-                    </td>
-                </tr>
-                <div style={{ height: "20px" }} />  { }
-                <tr>
-                    <td align="left" valign="top">
-                        <label htmlFor="wd-assign">Assign to</label><br />
-                        <input id="wd-assign" value="Everyone" />
-                    </td>
-                </tr>
-                <div style={{ height: "20px" }} />  { }
-                <tr>
-                    <td align="left" valign="top">
-                        <label htmlFor="wd-due"> Due </label><br />
-                        <input type="date" value="2024-05-13" id="wd-due" /><br />
-                    </td>
-                </tr>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    flexWrap: "wrap",
+                                    border: "1px solid #ced4da",
+                                    borderRadius: ".25rem",
+                                    padding: "5px",
+                                    minHeight: "38px",
+                                    gap: "5px",
+                                    justifyContent: "flex-start",
+                                }}
+                            >
 
-                <tr>
-                    <td align="left" valign="top">
-                        <div style={{ height: "20px" }} />  { }
-                        <label htmlFor="wd-available"> Available from </label> &nbsp; &nbsp; &nbsp; &nbsp;
-                        <label htmlFor="wd-until"> Until </label><br />
-                        <input type="date"
-                            value="2024-05-06"
-                            id="wd-available" />&nbsp;
-                        <input type="date"
-                            value="2024-05-20"
-                            id="wd-until" /><br />
-                    </td>
-                </tr>
-            </table>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        backgroundColor: "#e9ecef",
+                                        borderRadius: "0.25rem",
+                                        padding: "3px 25px",
+                                        fontSize: "1rem",
+                                    }}
+                                >
+                                    Everyone
+                                    <span style={{ marginLeft: "6px", fontWeight: "normal", fontSize: "1.3rem", lineHeight: "1", cursor: "default", }}>×</span>
+                                </div>
 
-            {/* Line */}
-            <hr style={{ width: "675px", margin: "20px 0" }} />
+                                <Form.Control
+                                    type="text"
+                                    placeholder=""
+                                    style={{ border: "none", boxShadow: "none", flex: 1, minWidth: "60px" }}
+                                />
+                            </div>
 
-            {/* Buttons */}
-            <div style={{ display: "flex", justifyContent: "center", gap: "3px" }}>
-                <button id="wd-cancel">Cancel</button>
-                <button id="wd-save">Save</button>
+                            <div style={{ fontWeight: "bold", color: "black", marginTop: "15px" }}>
+                                Due
+                            </div>
+
+                            <div style={{ position: "relative", marginTop: "5px" }}>
+                                <Form.Control
+                                    type="date"
+                                    defaultValue="2024-05-13"
+                                    style={{ paddingRight: "40px" }}
+                                />
+
+                            </div>
+
+                            <div
+                                style={{
+                                    fontWeight: "bold",
+                                    color: "black",
+                                    marginTop: "15px",
+                                    display: "flex",
+                                    gap: "60px",
+                                }}
+                            >
+                                <span>Available from</span>
+                                <span>Until</span>
+                            </div>
+
+
+                            <div style={{ display: "flex", gap: "10px", marginTop: "5px" }}>
+                                <Form.Control type="date" defaultValue="2024-05-06" style={{ width: "200px" }} />
+                                <Form.Control type="date" defaultValue="2024-05-20" style={{ width: "200px" }} />
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                    <hr
+                        style={{
+                            marginTop: "15px",
+                            marginBottom: "15px",
+                            border: "none",
+                            height: "1px",
+                            backgroundColor: "rgba(0,0,0,0.9)",
+                            width: "100%",
+                        }}
+                    />
+
+                    <div style={{ display: "flex", justifyContent: "flex-end", gap: "5px", marginTop: "5px" }}>
+                        <Button
+                            variant="light"
+                            style={{
+                                backgroundColor: "#e9ecef",
+                                border: "1px solid #888",
+                                color: "#444",
+                            }}
+                        >
+                            Cancel
+                        </Button>
+                        <Button variant="danger">Save</Button>
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
