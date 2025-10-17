@@ -2,34 +2,47 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import "./coursenavigation.css";
 
 export default function CourseNavigation() {
-  const pathname = usePathname();
+  const rawPathname = usePathname();
+  const [pathname, setPathname] = useState(rawPathname);
+  const { cid } = useParams();
+
+  useEffect(() => {
+    setPathname(rawPathname);
+  }, [rawPathname]);
 
   const links = [
-    { href: "/Courses/1234/Home", label: "Home" },
-    { href: "/Courses/1234/Modules", label: "Modules" },
-    { href: "/Courses/1234/Piazza", label: "Piazza" },
-    { href: "/Courses/1234/Zoom", label: "Zoom" },
-    { href: "/Courses/1234/Assignments", label: "Assignments" },
-    { href: "/Courses/1234/Quizzes", label: "Quizzes" },
-    { href: "/Courses/1234/Grades", label: "Grades" },
-    { href: "/Courses/1234/People/Table", label: "People" },
+    "Home",
+    "Modules",
+    "Piazza",
+    "Zoom",
+    "Assignments",
+    "Quizzes",
+    "Grades",
+    "People",
   ];
 
   return (
     <div id="wd-courses-navigation" className="wd list-group fs-5 rounded-0">
-      {links.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className={`list-group-item border-0 ${pathname === link.href ? "active" : ""
-            }`}
-        >
-          {link.label}
-        </Link>
-      ))}
+      {links.map((link) => {
+        const href =
+          link === "People" ? `/Courses/${cid}/People/Table` : `/Courses/${cid}/${link}`;
+
+        return (
+          <Link
+            key={href}
+            href={href}
+            className={`list-group-item border-0 ${pathname === href ? "active" : ""
+              }`}
+          >
+            {link}
+          </Link>
+        );
+      })}
     </div>
   );
 }

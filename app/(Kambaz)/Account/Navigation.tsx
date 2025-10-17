@@ -3,44 +3,29 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import "../styles.css";
-import { Nav, NavItem, NavLink } from "react-bootstrap";
 
 export default function AccountNavigation() {
   const pathname = usePathname();
 
+  const links = [
+    { href: "/Account/Signin", label: "Signin" },
+    { href: "/Account/Signup", label: "Signup" },
+    { href: "/Account/Profile", label: "Profile" },
+  ];
+
   return (
-    <Nav variant="pills" activeKey={pathname}>
-      <NavItem>
-        <NavLink
-          as={Link}
-          href="/Account/Signin"
-          eventKey="/Account/Signin"
-          className="custom-red"
+    <div id="wd-account-navigation" className="wd list-group fs-5 rounded-0">
+      {links.map((link) => (
+        <Link
+          key={link.href}
+          href={link.href}
+          className={`list-group-item border-0 ${pathname === link.href ? "active" : ""
+            }`}
         >
-          Signin
-        </NavLink>
-      </NavItem>
-      <NavItem>
-        <NavLink
-          as={Link}
-          href="/Account/Signup"
-          eventKey="/Account/Signup"
-          className="custom-red"
-        >
-          Signup
-        </NavLink>
-      </NavItem>
-      <NavItem>
-        <NavLink
-          as={Link}
-          href="/Account/Profile"
-          eventKey="/Account/Profile"
-          className="custom-red"
-        >
-          Profile
-        </NavLink>
-      </NavItem>
-    </Nav>
+          {link.label}
+        </Link>
+      ))}
+    </div>
   );
 }
 

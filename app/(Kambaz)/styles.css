@@ -43,21 +43,20 @@ body * {
   border-left: 3px solid green !important;
 }
 
-.nav-link.custom-red {
-  color: red;
-  background-color: transparent;
+#wd-account-navigation .list-group-item {
+  color: red !important;
   border-left: 4px solid transparent;
+  background-color: transparent;
 }
 
-.nav-link.custom-red.active {
+#wd-account-navigation .list-group-item.active {
   color: black !important;
-  background-color: transparent !important;
   border-left: 4px solid black !important;
-  box-shadow: none !important;
+  background-color: transparent !important;
 }
 
-.nav-link.custom-red:focus,
-.nav-link.custom-red:active {
+#wd-account-navigation .list-group-item:focus,
+#wd-account-navigation .list-group-item:active {
   outline: none;
   box-shadow: none !important;
   background-color: transparent !important;
