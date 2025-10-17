@@ -8,6 +8,7 @@ import Link from "next/link";
 export default function AssignmentEditor() {
     const { cid, aid } = useParams();
     const assignment = db.assignments.find(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (a: any) => a._id === aid && a.course === cid
     );
 

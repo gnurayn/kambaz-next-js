@@ -5,6 +5,7 @@ import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { BsGripVertical } from "react-icons/bs";
 import ModuleControlButtons from "./ModuleControlButtons";
 import LessonControlButtons from "./LessonControlButtons";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default function Modules() {
     const { cid } = useParams();
     const modules = db.modules;
@@ -12,8 +13,12 @@ export default function Modules() {
 
         <ListGroup id="wd-modules" className="rounded-0">
             {modules
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
                 .filter((module: any) => module.course === cid)
                 .map((module: any) => (
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
                     <ListGroupItem className="wd-module p-0 mb-5 fs-5 border-gray">
                         <div className="wd-title p-3 ps-2 bg-secondary">
                             <BsGripVertical className="me-2 fs-3" /> {module.name} <ModuleControlButtons />
