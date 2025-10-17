@@ -35,7 +35,6 @@ export default function Assignments() {
           </div>
 
           <ListGroup className="wd-lessons rounded-0">
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
             {courseAssignments.map((assignment: any) => (
               <ListGroupItem
