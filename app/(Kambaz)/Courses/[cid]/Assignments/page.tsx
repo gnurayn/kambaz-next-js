@@ -10,6 +10,8 @@ import AssignmentControls from "./AssignmentControls";
 import AssignmentDetails from "./AssignmentDetails";
 import AssignmentIcons from "./AssignmentIcons";
 import AssignmentControlButtons from "./AssignmentControlButtons";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 
 const GripVertical = BsGripVertical as React.ElementType;
 const ArrowDown = MdArrowDropDown as React.ElementType;
@@ -19,7 +21,6 @@ export default function Assignments() {
   const assignments = db.assignments;
 
   const courseAssignments = assignments.filter(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (assignment: any) => assignment.course === cid
   );
 
