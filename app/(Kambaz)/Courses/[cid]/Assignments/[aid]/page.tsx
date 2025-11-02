@@ -1,20 +1,23 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import * as db from "../../../../Database";
 import { Form, Button } from "react-bootstrap";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addAssignment, updateAssignment } from "../reducer";
 import Link from "next/link";
 
 export default function AssignmentEditor() {
     const { cid, aid } = useParams();
-    const assignment = db.assignments.find(
+    const router = useRouter();
+    const dispatch = useDispatch();
+    const foundAssignment = db.assignments.find(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (a: any) => a._id === aid && a.course === cid
     );
 
-    if (!assignment) {
-        return <div>Assignment not found.</div>;
-    }
+    const isEditing = !!foundAssignment;
 
     const fieldRowStyle = {
         display: "flex",
@@ -31,17 +34,46 @@ export default function AssignmentEditor() {
         Sep: "09", Oct: "10", Nov: "11", Dec: "12"
     };
 
-    const formatDateForInput = (dateStr: string) => {
-        const [monthStr, dayStr, yearStr] = dateStr
-            .replace(/,/g, "")
-            .split(" ")
-            .slice(0, 3);
+    const stripHtml = (html: string) => {
+        if (!html) return "";
+        return html.replace(/<[^>]*>/g, "");
+    };
 
-        const month = months[monthStr.slice(0, 3)] || "01";
-        const day = dayStr.padStart(2, "0");
-        const year = yearStr;
+    const blankAssignment = {
+        _id: "",
+        title: "",
+        description: "",
+        points: "",
+        dueDateDate: "",
+        availableFromDate: "",
+        availableUntilDate: "11:59 pm",
+        dueDateTime: "11:59 pm",
+        availableFromTime: "12:00 am",
+        availableUntilTime: "11:59 pm",
+        course: cid,
+        module: "Multiple Modules",
+    };
 
-        return `${year}-${month}-${day}`;
+    const [assignment, setAssignment] = useState(
+        isEditing
+            ? { ...foundAssignment, description: stripHtml(foundAssignment.description) }
+            : { ...blankAssignment }
+    );
+
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setAssignment(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSave = () => {
+        if (isEditing) {
+            dispatch(updateAssignment(assignment));
+        } else {
+
+            dispatch(addAssignment(assignment));
+        }
+        router.push(`/Courses/${cid}/Assignments`);
     };
 
     return (
@@ -50,8 +82,10 @@ export default function AssignmentEditor() {
                 <span>Assignment Name</span>
                 <Form.Control
                     type="text"
-                    defaultValue={assignment.title}
+                    name="title"
+                    value={assignment.title}
                     className="ps-3 mt-2"
+                    onChange={handleChange}
                     style={{
                         color: "black",
                         fontWeight: "normal",
@@ -59,27 +93,34 @@ export default function AssignmentEditor() {
                 />
             </div>
 
-            <div
-                style={{
-                    width: "500px",
-                    minHeight: "275px",
-                    fontSize: "14px",
-                    lineHeight: "1.5",
-                    whiteSpace: "normal",
-                    border: "1px solid #dee2e6",
-                    borderRadius: ".25rem",
-                    padding: "10px",
-                    backgroundColor: "white",
-                    marginTop: "15px",
-                }}
-                dangerouslySetInnerHTML={{ __html: assignment.description || "" }}
-            />
+            <div style={{ width: "500px", marginTop: "15px" }}>
+                <label>Description</label>
+                <Form.Control
+                    as="textarea"
+                    rows={6}
+                    name="description"
+                    value={assignment.description}
+                    onChange={handleChange}
+                    style={{
+                        fontSize: "14px",
+                        lineHeight: "1.5",
+                        whiteSpace: "normal",
+                        border: "1px solid #dee2e6",
+                        borderRadius: ".25rem",
+                        padding: "10px",
+                        backgroundColor: "white",
+                        color: "black",
+                    }}
+                />
+            </div>
 
             <div style={fieldRowStyle}>
                 <span>Points</span>
                 <Form.Control
                     type="text"
-                    defaultValue={assignment.points}
+                    name="points"
+                    value={assignment.points}
+                    onChange={handleChange}
                     style={{ width: "350px" }}
                 />
             </div>
@@ -201,7 +242,11 @@ export default function AssignmentEditor() {
                     </div>
                     <Form.Control
                         type="date"
-                        defaultValue={formatDateForInput(assignment.dueDate)}
+                        name="dueDate"
+                        value={assignment.dueDateDate}
+                        onChange={(e) =>
+                            setAssignment(prev => ({ ...prev, dueDateDate: e.target.value }))
+                        }
                         style={{ marginTop: "5px" }}
                     />
 
@@ -221,12 +266,20 @@ export default function AssignmentEditor() {
                     <div style={{ display: "flex", gap: "10px", marginTop: "5px" }}>
                         <Form.Control
                             type="date"
-                            defaultValue={formatDateForInput(assignment.availableFrom)}
+                            name="availableFrom"
+                            value={assignment.availableFromDate}
+                            onChange={(e) =>
+                                setAssignment(prev => ({ ...prev, availableFromDate: e.target.value }))
+                            }
                             style={{ width: "200px" }}
                         />
                         <Form.Control
                             type="date"
-                            defaultValue={formatDateForInput(assignment.availableUntil)}
+                            name="availableUntil"
+                            value={assignment.availableUntilDate}
+                            onChange={(e) =>
+                                setAssignment(prev => ({ ...prev, availableUntilDate: e.target.value }))
+                            }
                             style={{ width: "200px" }}
                         />
                     </div>
@@ -264,9 +317,9 @@ export default function AssignmentEditor() {
                         Cancel
                     </Button>
                 </Link>
-                <Link href={`/Courses/${cid}/Assignments`}>
-                    <Button variant="danger">Save</Button>
-                </Link>
+
+                <Button variant="danger" onClick={handleSave}>Save</Button>
+
             </div>
         </div>
     );

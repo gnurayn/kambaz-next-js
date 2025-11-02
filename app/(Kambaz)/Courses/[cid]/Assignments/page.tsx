@@ -1,7 +1,6 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import * as db from "../../../Database";
 import Link from "next/link";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { BsGripVertical } from "react-icons/bs";
@@ -10,6 +9,8 @@ import AssignmentControls from "./AssignmentControls";
 import AssignmentDetails from "./AssignmentDetails";
 import AssignmentIcons from "./AssignmentIcons";
 import AssignmentControlButtons from "./AssignmentControlButtons";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteAssignment } from "./reducer";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 
@@ -18,11 +19,30 @@ const ArrowDown = MdArrowDropDown as React.ElementType;
 
 export default function Assignments() {
   const { cid } = useParams();
-  const assignments = db.assignments;
+
+  const assignments = useSelector(
+    (state: any) => state.assignmentsReducer.assignments
+  );
 
   const courseAssignments = assignments.filter(
     (assignment: any) => assignment.course === cid
   );
+
+  const dispatch = useDispatch();
+
+  const handleDeleteAssignment = (assignmentId: string) => {
+    const confirmed = window.confirm("Are you sure you want to delete this assignment?");
+    if (confirmed) {
+      dispatch(deleteAssignment(assignmentId));
+    }
+  };
+
+  function formatDate(dateString?: string) {
+    if (!dateString) return "";
+    const [year, month, day] = dateString.split("-").map(Number);
+    const date = new Date(Date.UTC(year, month - 1, day));
+    return date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" });
+  }
 
   return (
     <div id="wd-assignments">
@@ -56,16 +76,16 @@ export default function Assignments() {
                     <span style={{ fontWeight: "bold" }}>
                       Not available until
                     </span>{" "}
-                    {assignment.availableFrom} |
+                    {formatDate(assignment.availableFromDate)} {assignment.availableFromTime} |
                   </small>
 
                   <small style={{ fontSize: "14px", color: "black" }}>
                     <span style={{ fontWeight: "bold" }}>Due</span>{" "}
-                    {assignment.dueDate} | {assignment.points} pts
+                    {formatDate(assignment.dueDateDate)} {assignment.dueDateTime} | {assignment.points} pts
                   </small>
                 </div>
 
-                <AssignmentControlButtons />
+                <AssignmentControlButtons assignmentId={assignment._id} deleteAssignment={handleDeleteAssignment} />
               </ListGroupItem>
             ))}
           </ListGroup>

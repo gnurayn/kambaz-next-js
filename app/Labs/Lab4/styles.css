@@ -1,0 +1,136 @@
+#wd-click-event .button-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    text-align: left;
+}
+
+#wd-click-event button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 400;
+    color: white;
+    background-color: #2563eb;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out, transform 0.1s;
+    width: auto;
+    flex: 0 0 auto;
+}
+
+#wd-counter-use-state button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out, transform 0.1s;
+    margin-right: 10px;
+}
+
+#wd-counter-up-click {
+    background-color: #16a34a;
+}
+
+#wd-counter-down-click {
+    background-color: #dc2626;
+}
+
+#wd-array-state-variables button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out, transform 0.1s;
+    margin-right: 10px;
+}
+
+#wd-array-state-add {
+    background-color: #16a34a;
+}
+
+#wd-array-state-delete {
+    background-color: #dc2626;
+}
+
+#wd-array-state-delete {
+    margin-left: 7.75rem;
+}
+
+#wd-child-state button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out, transform 0.1s;
+    margin-right: 10px;
+}
+
+#wd-increment-child-state-click {
+    background-color: #16a34a;
+}
+
+#wd-decrement-child-state-click {
+    background-color: #dc2626;
+}
+
+#wd-counter-redux button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out, transform 0.1s;
+    margin-right: 10px;
+}
+
+#wd-counter-redux-increment-click {
+    background-color: #16a34a;
+}
+
+#wd-counter-redux-decrement-click {
+    background-color: #dc2626;
+}
+
+#wd-update-todo-click {
+    background-color: #ffc107 !important;
+    color: #000 !important;
+    border: none !important;
+    margin-left: 8px;
+}
+
+#wd-add-todo-click {
+    background-color: #28a745 !important;
+    color: #fff !important;
+    border: none !important;
+    margin-left: 8px;
+}
+
+#wd-set-todo-click {
+    margin-right: 3px;
+}
+
+#wd-delete-todo-click {
+    background-color: #dc2626 !important;
+    color: #fff !important;
+    border: none !important;
+    margin-left: 8px;
+}
+
+.todo-input {
+    width: 200px;
+    margin-right: 8px;
+}
+
+.todo-title {
+    flex: 1;
+    text-align: left;
+}

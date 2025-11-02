@@ -2,11 +2,14 @@ import { FaPlus } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import React from "react";
 import { Button, Form } from "react-bootstrap";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 const Plus = FaPlus as React.ElementType;
 const Search = FaSearch as React.ElementType;
 
 export default function AssignmentControls() {
+    const { cid } = useParams();
     return (
         <div
             id="wd-assignment-controls"
@@ -35,10 +38,12 @@ export default function AssignmentControls() {
                     Group
                 </Button>
 
-                <Button variant="danger" size="lg" id="wd-add-assignment-btn">
-                    <Plus className="position-relative me-2" style={{ bottom: ".75px" }} />
-                    Assignment
-                </Button>
+                <Link href={`/Courses/${cid}/Assignments/new`}>
+                    <Button variant="danger" size="lg" id="wd-add-assignment-btn">
+                        <Plus className="position-relative me-2" style={{ bottom: ".75px" }} />
+                        Assignment
+                    </Button>
+                </Link>
             </div>
         </div>
     );
