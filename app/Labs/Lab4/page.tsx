@@ -12,7 +12,7 @@ import PassingDataOnEvent from "./PassingDataOnEvent";
 import PassingFunctions from "./PassingFunctions";
 import StringStateVariables from "./StringStateVariables";
 import ReduxExamples from "./ReduxExamples/page";
-import store from "./store/page";
+import store from "../../../store/labstore";
 import { Provider } from "react-redux";
 import "./styles.css";
 
