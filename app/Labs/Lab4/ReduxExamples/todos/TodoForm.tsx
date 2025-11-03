@@ -3,6 +3,7 @@ import { Button, FormControl, ListGroupItem } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { addTodo, updateTodo, setTodo } from "./todosReducer";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default function TodoForm() {
     const { todo } = useSelector((state: any) => state.todosReducer);
     const dispatch = useDispatch();

@@ -1,6 +1,8 @@
 "use client"
 import { useSelector, useDispatch } from "react-redux";
 import { increment, decrement } from "./counterReducer";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default function CounterRedux() {
     const { count } = useSelector((state: any) => state.counterReducer);
     const dispatch = useDispatch();

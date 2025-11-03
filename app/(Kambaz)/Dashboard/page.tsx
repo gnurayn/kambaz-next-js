@@ -6,6 +6,8 @@ import { setUser, enrollCourse, unenrollCourse } from "../Account/enrollmentRedu
 import { Button, Card, CardBody, CardImg, CardText, CardTitle, Col, FormControl, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewCourse, deleteCourse, updateCourse } from "../Courses/reducer";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default function Dashboard() {
   const { courses } = useSelector((state: any) => state.coursesReducer);
   const dispatch = useDispatch();

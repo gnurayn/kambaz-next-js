@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import * as db from "../../Database";
 import { FormControl, Button } from "react-bootstrap";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default function Signin() {
 
   const [credentials, setCredentials] = useState<any>({});

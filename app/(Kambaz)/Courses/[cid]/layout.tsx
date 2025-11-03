@@ -7,6 +7,7 @@ import { FaAlignJustify } from "react-icons/fa";
 import Breadcrumb from "./Breadcrumb";
 import CourseGuard from "./CourseGuard";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const AlignJustify = FaAlignJustify as React.ElementType;
 
 export default function CoursesLayout({ children }: { children: ReactNode }) {

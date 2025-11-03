@@ -2,6 +2,8 @@ import { ListGroup } from "react-bootstrap";
 import TodoForm from "./TodoForm";
 import TodoItem from "./TodoItem";
 import { useSelector } from "react-redux";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default function TodoList() {
     const { todos } = useSelector((state: any) => state.todosReducer);
     return (

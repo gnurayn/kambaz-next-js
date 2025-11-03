@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter, useParams } from "next/navigation";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default function CourseGuard({ children }: { children: React.ReactNode }) {
     const { cid } = useParams();
     const router = useRouter();

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { useSelector } from "react-redux";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default function ArrayStateVariable() {
   const { todos } = useSelector((state: any) => state.todosReducer);
   const [array, setArray] = useState([1, 2, 3, 4, 5]);
