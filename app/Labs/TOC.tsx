@@ -30,6 +30,15 @@ export default function TOC() {
       <NavItem>
         <NavLink href="https://github.com/gnurayn" as={Link}>My Github</NavLink>
       </NavItem>
+      <NavItem>
+        <NavLink href="https://github.com/gnurayn/kambaz-next-js" as={Link}>My Frontend Repository</NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink href="https://github.com/gnurayn/kambaz-node-server-app" as={Link}>My Backend Repository</NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink href="https://kambaz-node-server-app-u3dd.onrender.com" as={Link}>Render Link</NavLink>
+      </NavItem>
     </Nav>
   );
 }
