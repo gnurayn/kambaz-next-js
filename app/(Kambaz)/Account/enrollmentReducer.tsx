@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import enrollmentsData from "../Database/enrollments.json";
 
 interface EnrollmentState {
     enrolledCourses: string[];
@@ -17,33 +16,21 @@ const enrollmentSlice = createSlice({
     reducers: {
         setUser: (state, { payload: userId }: { payload: string }) => {
             state.userId = userId;
-
-            state.enrolledCourses = enrollmentsData
-                .filter((e) => e.user === userId)
-                .map((e) => e.course);
+            // Remove the line that loads from enrollmentsData.json
+            // The enrollments will be loaded via API in fetchEnrollments
         },
 
         enrollCourse: (state, { payload: courseId }: { payload: string }) => {
-            if (state.userId && !state.enrolledCourses.includes(courseId)) {
-                state.enrolledCourses.push(courseId);
 
-                enrollmentsData.push({
-                    _id: String(enrollmentsData.length + 1),
-                    user: state.userId,
-                    course: courseId,
-                });
+            if (!state.enrolledCourses.includes(courseId)) {
+                state.enrolledCourses.push(courseId);
             }
         },
 
         unenrollCourse: (state, { payload: courseId }: { payload: string }) => {
-            if (state.userId) {
-                state.enrolledCourses = state.enrolledCourses.filter((c) => c !== courseId);
 
-                const index = enrollmentsData.findIndex(
-                    (e) => e.user === state.userId && e.course === courseId
-                );
-                if (index !== -1) enrollmentsData.splice(index, 1);
-            }
+            state.enrolledCourses = state.enrolledCourses.filter((c) => c !== courseId);
+
         },
     },
 });

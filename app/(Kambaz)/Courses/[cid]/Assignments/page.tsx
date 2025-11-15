@@ -10,7 +10,9 @@ import AssignmentDetails from "./AssignmentDetails";
 import AssignmentIcons from "./AssignmentIcons";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAssignment } from "./reducer";
+import { setAssignments, deleteAssignment } from "./reducer";
+import * as client from "../../client";
+import { useEffect } from "react";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 
@@ -24,11 +26,31 @@ export default function Assignments() {
     (state: any) => state.assignmentsReducer.assignments
   );
 
-  const courseAssignments = assignments.filter(
-    (assignment: any) => assignment.course === cid
-  );
+  const courseAssignments = assignments;
 
   const dispatch = useDispatch();
+
+  const fetchAssignments = async () => {
+    const assignments = await client.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(assignments));
+  };
+  const onRemoveAssignment = async (assignmentId: string) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this assignment?"
+    );
+
+    if (!confirmed) return;
+
+    await client.deleteAssignment(assignmentId);
+
+    dispatch(
+      setAssignments(assignments.filter((a: any) => a._id !== assignmentId))
+    );
+  };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
 
   const handleDeleteAssignment = (assignmentId: string) => {
     const confirmed = window.confirm("Are you sure you want to delete this assignment?");
@@ -85,7 +107,7 @@ export default function Assignments() {
                   </small>
                 </div>
 
-                <AssignmentControlButtons assignmentId={assignment._id} deleteAssignment={handleDeleteAssignment} />
+                <AssignmentControlButtons assignmentId={assignment._id} deleteAssignment={(assignmentId) => onRemoveAssignment(assignmentId)} />
               </ListGroupItem>
             ))}
           </ListGroup>

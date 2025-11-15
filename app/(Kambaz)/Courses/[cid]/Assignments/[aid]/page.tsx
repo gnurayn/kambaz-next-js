@@ -1,22 +1,22 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import * as db from "../../../../Database";
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addAssignment, updateAssignment } from "../reducer";
+import { useDispatch, useSelector } from "react-redux";
+import { setAssignments, updateAssignment } from "../reducer";
 import Link from "next/link";
+import * as client from "../../../client";
 
 export default function AssignmentEditor() {
     const { cid, aid } = useParams();
     const router = useRouter();
     const dispatch = useDispatch();
-    const foundAssignment = db.assignments.find(
+    const assignments = useSelector((state: any) => state.assignmentsReducer.assignments);
+    const foundAssignment = assignments.find(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (a: any) => a._id === aid && a.course === cid
+        (a: any) => a._id === aid
     );
-
     const isEditing = !!foundAssignment;
 
     const fieldRowStyle = {
@@ -60,18 +60,29 @@ export default function AssignmentEditor() {
             : { ...blankAssignment }
     );
 
+    const onCreateAssignmentForCourse = async (newAssignmentData: any) => {
+        if (!cid) return;
+        const assignment = await client.createAssignmentForCourse(cid as string, newAssignmentData);
+        dispatch(setAssignments([...assignments, assignment]));
+    };
+
+    const onUpdateAssignment = async (assignment: any) => {
+        await client.updateAssignment(assignment);
+        const newAssignments = assignments.map((a: any) => a._id === assignment._id ? assignment : a);
+        dispatch(setAssignments(newAssignments));
+    };
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setAssignment(prev => ({ ...prev, [name]: value }));
+        setAssignment((prev: any) => ({ ...prev, [name]: value }));
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if (isEditing) {
-            dispatch(updateAssignment(assignment));
+            await onUpdateAssignment({ ...assignment, editing: false })
         } else {
-
-            dispatch(addAssignment(assignment));
+            await onCreateAssignmentForCourse(assignment);
         }
         router.push(`/Courses/${cid}/Assignments`);
     };
@@ -245,7 +256,7 @@ export default function AssignmentEditor() {
                         name="dueDate"
                         value={assignment.dueDateDate}
                         onChange={(e) =>
-                            setAssignment(prev => ({ ...prev, dueDateDate: e.target.value }))
+                            setAssignment((prev: any) => ({ ...prev, dueDateDate: e.target.value }))
                         }
                         style={{ marginTop: "5px" }}
                     />
@@ -269,7 +280,7 @@ export default function AssignmentEditor() {
                             name="availableFrom"
                             value={assignment.availableFromDate}
                             onChange={(e) =>
-                                setAssignment(prev => ({ ...prev, availableFromDate: e.target.value }))
+                                setAssignment((prev: any) => ({ ...prev, availableFromDate: e.target.value }))
                             }
                             style={{ width: "200px" }}
                         />
@@ -278,7 +289,7 @@ export default function AssignmentEditor() {
                             name="availableUntil"
                             value={assignment.availableUntilDate}
                             onChange={(e) =>
-                                setAssignment(prev => ({ ...prev, availableUntilDate: e.target.value }))
+                                setAssignment((prev: any) => ({ ...prev, availableUntilDate: e.target.value }))
                             }
                             style={{ width: "200px" }}
                         />

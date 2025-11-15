@@ -9,7 +9,6 @@ export default function AssignmentControlButtons({ assignmentId, deleteAssignmen
   return (
     <div className="float-end d-flex align-items-center gap-1">
       <FaTrash className="text-danger me-2 mb-1" onClick={() => {
-        console.log("Trash clicked for", assignmentId);
         deleteAssignment(assignmentId)
       }} />
       <GreenCheckmark />

@@ -21,6 +21,9 @@ export default function Labs() {
         <NavItem>
           <NavLink href="/Labs/Lab4" id="wd-lab4-link" as={Link} className={`nav-link ${pathname.endsWith("Lab4") ? "active" : ""}`}>Lab 4</NavLink>
         </NavItem>
+        <NavItem>
+          <NavLink href="/Labs/Lab5" id="wd-lab5-link" as={Link} className={`nav-link ${pathname.endsWith("Lab5") ? "active" : ""}`}>Lab 5</NavLink>
+        </NavItem>
       </Nav>
     </div>
   );
