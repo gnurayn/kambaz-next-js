@@ -5,6 +5,8 @@ import { FormControl, ListGroup, ListGroupItem } from "react-bootstrap";
 import { FaPencil, FaTrash } from "react-icons/fa6";
 import { FaPlusCircle } from "react-icons/fa";
 import { TiDelete } from "react-icons/ti";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default function WorkingWithArraysAsynchronously() {
     const [todos, setTodos] = useState<any[]>([]);
     const [errorMessage, setErrorMessage] = useState(null);

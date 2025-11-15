@@ -8,6 +8,7 @@ import { setAssignments, updateAssignment } from "../reducer";
 import Link from "next/link";
 import * as client from "../../../client";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default function AssignmentEditor() {
     const { cid, aid } = useParams();
     const router = useRouter();

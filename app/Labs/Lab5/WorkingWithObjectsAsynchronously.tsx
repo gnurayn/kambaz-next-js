@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import * as client from "./client";
 import { FormControl } from "react-bootstrap";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default function WorkingWithObjectsAsynchronously() {
     const [assignment, setAssignment] = useState<any>({});
     const fetchAssignment = async () => {
