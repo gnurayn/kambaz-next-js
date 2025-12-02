@@ -23,21 +23,6 @@ export default function AssignmentEditor() {
     );
     const isEditing = !!foundAssignment;
 
-    useEffect(() => {
-        if (!canEditCourse) {
-            alert("Only Faculty and Admin can edit assignments");
-            router.push(`/Courses/${cid}/Assignments`);
-        }
-    }, [canEditCourse, router, cid]);
-
-    if (!canEditCourse) {
-        return (
-            <div className="alert alert-danger">
-                Access denied. Only Faculty and Admin can edit assignments.
-            </div>
-        );
-    }
-
     const fieldRowStyle = {
         display: "flex",
         justifyContent: "space-between",
@@ -105,6 +90,21 @@ export default function AssignmentEditor() {
         }
         router.push(`/Courses/${cid}/Assignments`);
     };
+
+    useEffect(() => {
+        if (!canEditCourse) {
+            alert("Only Faculty and Admin can edit assignments");
+            router.push(`/Courses/${cid}/Assignments`);
+        }
+    }, [canEditCourse, router, cid]);
+
+    if (!canEditCourse) {
+        return (
+            <div className="alert alert-danger">
+                Access denied. Only Faculty and Admin can edit assignments.
+            </div>
+        );
+    }
 
     return (
         <div id="wd-assignments-editor" className="d-flex flex-column">
