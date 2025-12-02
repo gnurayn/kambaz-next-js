@@ -13,21 +13,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAssignments, deleteAssignment } from "./reducer";
 import * as client from "../../client";
 import { useEffect } from "react";
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useAuth } from "../../../Account/useAuth";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 const GripVertical = BsGripVertical as React.ElementType;
 const ArrowDown = MdArrowDropDown as React.ElementType;
 
 export default function Assignments() {
   const { cid } = useParams();
+  const { canEditCourse } = useAuth();
 
   const assignments = useSelector(
     (state: any) => state.assignmentsReducer.assignments
   );
 
   const courseAssignments = assignments;
-
   const dispatch = useDispatch();
 
   const fetchAssignments = async () => {
@@ -36,28 +37,21 @@ export default function Assignments() {
   };
 
   const onRemoveAssignment = async (assignmentId: string) => {
-    console.log("🗑️ Delete clicked for:", assignmentId);
 
     const confirmed = window.confirm(
       "Are you sure you want to delete this assignment?"
     );
 
     if (!confirmed) {
-      console.log("❌ Delete cancelled");
       return;
     }
 
-    console.log("✅ Delete confirmed, calling API...");
-
     try {
       const result = await client.deleteAssignment(assignmentId);
-      console.log("✅ API call successful, result:", result);
 
       const newAssignments = assignments.filter((a: any) => a._id !== assignmentId);
-      console.log("✅ New assignments count:", newAssignments.length, "Old count:", assignments.length);
 
       dispatch(setAssignments(newAssignments));
-      console.log("✅ Redux dispatch complete");
     } catch (error) {
       console.error("❌ Error deleting assignment:", error);
     }
@@ -83,7 +77,8 @@ export default function Assignments() {
 
   return (
     <div id="wd-assignments">
-      <AssignmentControls />
+      {canEditCourse && <AssignmentControls />}
+
       <ListGroup className="rounded-0" id="wd-modules">
         <ListGroupItem className="wd-module p-0 mb-5 fs-5 border-gray">
           <div className="wd-title p-3 ps-2 my-gray">
@@ -92,7 +87,6 @@ export default function Assignments() {
           </div>
 
           <ListGroup className="wd-lessons rounded-0">
-
             {courseAssignments.map((assignment: any) => (
               <ListGroupItem
                 key={assignment._id}
@@ -122,7 +116,12 @@ export default function Assignments() {
                   </small>
                 </div>
 
-                <AssignmentControlButtons assignmentId={assignment._id} deleteAssignment={(assignmentId) => onRemoveAssignment(assignmentId)} />
+                {canEditCourse && (
+                  <AssignmentControlButtons
+                    assignmentId={assignment._id}
+                    deleteAssignment={(assignmentId) => onRemoveAssignment(assignmentId)}
+                  />
+                )}
               </ListGroupItem>
             ))}
           </ListGroup>

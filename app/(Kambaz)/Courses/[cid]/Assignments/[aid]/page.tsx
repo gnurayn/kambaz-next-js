@@ -2,23 +2,41 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { Form, Button } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAssignments, updateAssignment } from "../reducer";
 import Link from "next/link";
 import * as client from "../../../client";
+import { useAuth } from "../../../../Account/useAuth";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default function AssignmentEditor() {
     const { cid, aid } = useParams();
     const router = useRouter();
     const dispatch = useDispatch();
+    const { canEditCourse } = useAuth();
+
     const assignments = useSelector((state: any) => state.assignmentsReducer.assignments);
     const foundAssignment = assignments.find(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (a: any) => a._id === aid
     );
     const isEditing = !!foundAssignment;
+
+    useEffect(() => {
+        if (!canEditCourse) {
+            alert("Only Faculty and Admin can edit assignments");
+            router.push(`/Courses/${cid}/Assignments`);
+        }
+    }, [canEditCourse, router, cid]);
+
+    if (!canEditCourse) {
+        return (
+            <div className="alert alert-danger">
+                Access denied. Only Faculty and Admin can edit assignments.
+            </div>
+        );
+    }
 
     const fieldRowStyle = {
         display: "flex",
