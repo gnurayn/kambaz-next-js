@@ -75,7 +75,7 @@ export default function Dashboard() {
 
   const handleEnroll = async (courseId: string) => {
     if (!currentUser) return;
-    await client.enrollInCourse(currentUser._id, courseId);
+    await client.enrollIntoCourse(currentUser._id, courseId);
     dispatch(enrollCourse(courseId));
   };
 
