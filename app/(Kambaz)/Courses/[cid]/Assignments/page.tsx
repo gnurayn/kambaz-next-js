@@ -34,18 +34,33 @@ export default function Assignments() {
     const assignments = await client.findAssignmentsForCourse(cid as string);
     dispatch(setAssignments(assignments));
   };
+
   const onRemoveAssignment = async (assignmentId: string) => {
+    console.log("🗑️ Delete clicked for:", assignmentId);
+
     const confirmed = window.confirm(
       "Are you sure you want to delete this assignment?"
     );
 
-    if (!confirmed) return;
+    if (!confirmed) {
+      console.log("❌ Delete cancelled");
+      return;
+    }
 
-    await client.deleteAssignment(assignmentId);
+    console.log("✅ Delete confirmed, calling API...");
 
-    dispatch(
-      setAssignments(assignments.filter((a: any) => a._id !== assignmentId))
-    );
+    try {
+      const result = await client.deleteAssignment(assignmentId);
+      console.log("✅ API call successful, result:", result);
+
+      const newAssignments = assignments.filter((a: any) => a._id !== assignmentId);
+      console.log("✅ New assignments count:", newAssignments.length, "Old count:", assignments.length);
+
+      dispatch(setAssignments(newAssignments));
+      console.log("✅ Redux dispatch complete");
+    } catch (error) {
+      console.error("❌ Error deleting assignment:", error);
+    }
   };
 
   useEffect(() => {
