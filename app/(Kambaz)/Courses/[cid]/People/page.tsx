@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import * as client from "../../client";
 import PeopleTable from "./Table/page";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 export default function CoursePeople() {
     const { cid } = useParams();
     const [users, setUsers] = useState<any[]>([]);
