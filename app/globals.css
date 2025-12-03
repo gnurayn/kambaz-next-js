@@ -24,3 +24,15 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.quiz-ellipsis-btn::after {
+  display: none !important;
+}
+
+.quiz-ellipsis-btn:hover {
+  color: #666 !important;
+}
+
+.quiz-ellipsis-btn:focus {
+  box-shadow: none !important;
+}
