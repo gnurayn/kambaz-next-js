@@ -1,6 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { Dropdown } from "react-bootstrap";
+import { BsCheckCircleFill } from "react-icons/bs";
+import { IoEllipsisVertical } from "react-icons/io5";
 import { useAuth } from "../../../Account/useAuth";
 
 interface QuizListItemProps {
@@ -20,13 +22,13 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
         const untilDate = new Date(quiz.availableUntilDate);
 
         if (now > untilDate) {
-            return { text: "Closed", color: "text-danger" };
+            return { text: "Closed", color: "#6c757d" };
         } else if (now >= availableDate && now <= untilDate) {
-            return { text: "Available", color: "text-success" };
+            return { text: "Available", color: "#000" };
         } else {
             return {
-                text: `Not available until ${availableDate.toLocaleDateString()}`,
-                color: "text-muted"
+                text: `Not available until ${availableDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} at ${quiz.availableFromTime}`,
+                color: "#000"
             };
         }
     };
@@ -51,8 +53,27 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
         onPublishToggle(quiz._id, !quiz.published);
     };
 
+    const formatDate = (dateStr: string) => {
+        const date = new Date(dateStr);
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    };
+
     return (
-        <div className="d-flex align-items-start border-bottom py-3">
+        <div
+            className="d-flex align-items-start border-bottom py-3 position-relative"
+            style={{ paddingLeft: "20px" }}
+        >
+            <div
+                style={{
+                    position: "absolute",
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: "4px",
+                    backgroundColor: "#4caf50"
+                }}
+            />
+
             <div className="me-3">
                 <span style={{ fontSize: "24px" }}>📝</span>
             </div>
@@ -62,17 +83,22 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
                     <div>
                         <h5
                             className="mb-1"
-                            style={{ cursor: "pointer", color: "#0066cc" }}
+                            style={{
+                                cursor: "pointer",
+                                color: "#000",
+                                fontWeight: "bold",
+                                fontSize: "18px"
+                            }}
                             onClick={handleTitleClick}
                         >
                             {quiz.title}
                         </h5>
-                        <div className="text-muted small">
-                            <span className={availability.color}>
+                        <div style={{ color: "#6c757d", fontSize: "14px" }}>
+                            <span style={{ color: availability.color }}>
                                 <strong>{availability.text}</strong>
                             </span>
                             {" | "}
-                            <strong>Due</strong> {quiz.dueDate} at {quiz.dueTime}
+                            <strong>Due</strong> {formatDate(quiz.dueDate)} at {quiz.dueTime}
                             {" | "}
                             {quiz.points} pts
                             {" | "}
@@ -87,33 +113,33 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
                     </div>
 
                     <div className="d-flex align-items-center gap-2">
+
                         {canEditCourse && (
                             <button
                                 onClick={handlePublishToggle}
                                 className="btn btn-link p-0"
-                                style={{ fontSize: "20px", textDecoration: "none" }}
+                                style={{
+                                    fontSize: "20px",
+                                    textDecoration: "none",
+                                    color: quiz.published ? "#28a745" : "#6c757d"
+                                }}
                                 title={quiz.published ? "Published - Click to unpublish" : "Unpublished - Click to publish"}
                             >
-                                {quiz.published ? "✅" : "🚫"}
+                                <BsCheckCircleFill />
                             </button>
                         )}
 
                         {canEditCourse && (
                             <Dropdown align="end">
                                 <Dropdown.Toggle
-                                    as="button"
-                                    className="btn btn-link p-0 border-0"
+                                    as="div"
                                     style={{
-                                        fontSize: "18px",
-                                        textDecoration: "none",
-                                        color: "#aaa",
-                                        background: "none",
-                                        boxShadow: "none",
-                                        fontWeight: "300",
-                                        lineHeight: "1"
+                                        fontSize: "20px",
+                                        color: "#6c757d",
+                                        cursor: "pointer"
                                     }}
                                 >
-                                    ⋮
+                                    <IoEllipsisVertical />
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
@@ -135,4 +161,3 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
         </div>
     );
 }
-
