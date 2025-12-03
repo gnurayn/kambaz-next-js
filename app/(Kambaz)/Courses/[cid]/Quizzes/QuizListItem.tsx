@@ -86,9 +86,7 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
                         </div>
                     </div>
 
-                    {/* Right Side: Publish Icon + Menu */}
                     <div className="d-flex align-items-center gap-2">
-                        {/* Publish/Unpublish Toggle */}
                         {canEditCourse && (
                             <button
                                 onClick={handlePublishToggle}
@@ -103,9 +101,17 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
                         {canEditCourse && (
                             <Dropdown align="end">
                                 <Dropdown.Toggle
-                                    variant="link"
-                                    className="p-0"
-                                    style={{ fontSize: "20px", textDecoration: "none", color: "#666" }}
+                                    as="button"
+                                    className="btn btn-link p-0 border-0"
+                                    style={{
+                                        fontSize: "18px",
+                                        textDecoration: "none",
+                                        color: "#aaa",
+                                        background: "none",
+                                        boxShadow: "none",
+                                        fontWeight: "300",
+                                        lineHeight: "1"
+                                    }}
                                 >
                                     ⋮
                                 </Dropdown.Toggle>
@@ -129,3 +135,4 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
         </div>
     );
 }
+
