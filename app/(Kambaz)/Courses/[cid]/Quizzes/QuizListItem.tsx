@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { Dropdown } from "react-bootstrap";
 import { useAuth } from "../../../Account/useAuth";
+import "./style.css";
 
 interface QuizListItemProps {
     quiz: any;
