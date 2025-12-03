@@ -61,3 +61,15 @@ body * {
   box-shadow: none !important;
   background-color: transparent !important;
 }
+
+.quiz-ellipsis-btn::after {
+  display: none !important;
+}
+
+.quiz-ellipsis-btn:hover {
+  color: #666 !important;
+}
+
+.quiz-ellipsis-btn:focus {
+  box-shadow: none !important;
+}
