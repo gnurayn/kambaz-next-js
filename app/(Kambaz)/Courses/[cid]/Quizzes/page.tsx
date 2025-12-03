@@ -87,8 +87,8 @@ export default function QuizzesPage() {
         </div>
       )}
 
-      <div className="border-top border-bottom py-2 mb-3 bg-light">
-        <h6 className="mb-0">▼ Assignment Quizzes</h6>
+      <div className="border-top border-bottom py-3 mb-3 bg-light d-flex justify-content-between align-items-center">
+        <h6 className="mb-0 ms-2">▼ Assignment Quizzes</h6>
       </div>
 
       {displayQuizzes.length === 0 && !searchQuery && (
