@@ -25,6 +25,15 @@ function GreenCheckmark() {
     );
 }
 
+function GrayCheckmark() {
+    return (
+        <span className="me-1 position-relative">
+            <CheckCircle style={{ top: "2px" }} className="text-secondary me-1 position-absolute fs-5" />
+            <Circle className="text-white me-1 fs-6" />
+        </span>
+    );
+}
+
 export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle }: QuizListItemProps) {
     const router = useRouter();
     const { canEditCourse, isStudent } = useAuth();
@@ -77,7 +86,7 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
             className="d-flex align-items-start border-bottom py-3 position-relative"
             style={{ paddingLeft: "20px", paddingRight: "20px" }}
         >
-            {/* Green left border */}
+            {/* Green left border - same color as checkmark */}
             <div
                 style={{
                     position: "absolute",
@@ -85,25 +94,25 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
                     top: 0,
                     bottom: 0,
                     width: "4px",
-                    backgroundColor: "#28a745"
+                    backgroundColor: "#198754" // Bootstrap success color
                 }}
             />
 
-            {/* Gray right border */}
+            {/* Gray right border - 2px */}
             <div
                 style={{
                     position: "absolute",
                     right: 0,
                     top: 0,
                     bottom: 0,
-                    width: "1px",
+                    width: "2px",
                     backgroundColor: "#dee2e6"
                 }}
             />
 
-            {/* Left Icon - Rocket */}
-            <div className="me-3">
-                <RxRocket style={{ fontSize: "24px", color: "#28a745" }} />
+            {/* Left Icon - Rocket - centered vertically */}
+            <div className="me-3 d-flex align-items-center">
+                <RxRocket className="text-success" style={{ fontSize: "24px" }} />
             </div>
 
             {/* Quiz Content */}
@@ -153,7 +162,7 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
                                 }}
                                 title={quiz.published ? "Published - Click to unpublish" : "Unpublished - Click to publish"}
                             >
-                                {quiz.published ? <GreenCheckmark /> : <Circle className="text-secondary fs-5" />}
+                                {quiz.published ? <GreenCheckmark /> : <GrayCheckmark />}
                             </button>
                         )}
 
