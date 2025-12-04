@@ -87,7 +87,7 @@ export default function QuizzesPage() {
         </div>
       )}
 
-      <div className="border-top border-bottom py-3 mb-3 d-flex justify-content-between align-items-center"
+      <div className="border-top border-bottom py-3 mb-0 d-flex justify-content-between align-items-center"
         style={{ backgroundColor: "#c6ccd1ff" }}>
         <h6 className="mb-0 ms-2">▼ Assignment Quizzes</h6>
       </div>

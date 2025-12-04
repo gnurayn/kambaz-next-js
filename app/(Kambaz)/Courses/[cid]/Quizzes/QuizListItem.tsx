@@ -25,15 +25,6 @@ function GreenCheckmark() {
     );
 }
 
-function GrayCheckmark() {
-    return (
-        <span className="me-1 position-relative">
-            <CheckCircle style={{ top: "2px" }} className="text-secondary me-1 position-absolute fs-5" />
-            <Circle className="text-white me-1 fs-6" />
-        </span>
-    );
-}
-
 export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle }: QuizListItemProps) {
     const router = useRouter();
     const { canEditCourse, isStudent } = useAuth();
@@ -83,7 +74,7 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
 
     return (
         <div
-            className="d-flex align-items-start border-bottom py-3 position-relative"
+            className="d-flex align-items-center border-bottom py-3 position-relative"
             style={{ paddingLeft: "20px", paddingRight: "20px" }}
         >
             {/* Green left border - same color as checkmark */}
@@ -111,13 +102,13 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
             />
 
             {/* Left Icon - Rocket - centered vertically */}
-            <div className="me-3 d-flex align-items-center">
+            <div className="me-3">
                 <RxRocket className="text-success" style={{ fontSize: "24px" }} />
             </div>
 
             {/* Quiz Content */}
             <div className="flex-grow-1">
-                <div className="d-flex justify-content-between align-items-start">
+                <div className="d-flex justify-content-between align-items-center">
                     <div>
                         <h5
                             className="mb-1"
@@ -150,23 +141,24 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
                         </div>
                     </div>
 
-                    {/* Right Side: Checkmark + Three Dots Dropdown */}
+                    {/* Right Side: Checkmark/🚫 + Three Dots Dropdown - centered */}
                     <div className="d-flex align-items-center gap-2">
-                        {/* Checkmark (published/unpublished) */}
+                        {/* Published: Green Checkmark, Unpublished: 🚫 */}
                         {canEditCourse && (
                             <button
                                 onClick={handlePublishToggle}
                                 className="btn btn-link p-0"
                                 style={{
-                                    textDecoration: "none"
+                                    textDecoration: "none",
+                                    fontSize: "20px"
                                 }}
                                 title={quiz.published ? "Published - Click to unpublish" : "Unpublished - Click to publish"}
                             >
-                                {quiz.published ? <GreenCheckmark /> : <GrayCheckmark />}
+                                {quiz.published ? <GreenCheckmark /> : "🚫"}
                             </button>
                         )}
 
-                        {/* Three Dots with Dropdown */}
+                        {/* Three Dots with Dropdown - centered */}
                         {canEditCourse && (
                             <Dropdown align="end">
                                 <Dropdown.Toggle
@@ -174,7 +166,9 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
                                     style={{
                                         fontSize: "20px",
                                         color: "#6c757d",
-                                        cursor: "pointer"
+                                        cursor: "pointer",
+                                        display: "flex",
+                                        alignItems: "center"
                                     }}
                                 >
                                     <IoEllipsisVertical />
