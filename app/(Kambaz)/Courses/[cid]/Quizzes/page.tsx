@@ -44,7 +44,7 @@ export default function QuizzesPage() {
 
   const handlePublishToggle = async (quizId: string, published: boolean) => {
     try {
-      const updatedQuiz = await client.updateQuiz({ _id: quizId, published });
+      await client.updateQuiz(quizId, { published });
       setQuizzes(quizzes.map(q => q._id === quizId ? { ...q, published } : q));
     } catch (error) {
       console.error("Failed to update quiz:", error);

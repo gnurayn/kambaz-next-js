@@ -1,3 +1,4 @@
+"use client"
 import axios from "axios";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -21,6 +22,11 @@ export const findQuizzesForCourse = async (courseId: string) => {
     return response.data;
 };
 
+export const findQuizById = async (quizId: string) => {
+    const response = await axiosWithToken.get(`${HTTP_SERVER}/api/quizzes/${quizId}`);
+    return response.data;
+};
+
 export const createQuizForCourse = async (courseId: string, quiz: any) => {
     const response = await axiosWithToken.post(`${HTTP_SERVER}/api/courses/${courseId}/quizzes`, quiz);
     return response.data;
@@ -31,7 +37,7 @@ export const deleteQuiz = async (quizId: string) => {
     return response.data;
 };
 
-export const updateQuiz = async (quiz: any) => {
-    const response = await axiosWithToken.put(`${HTTP_SERVER}/api/quizzes/${quiz._id}`, quiz);
+export const updateQuiz = async (quizId: string, updates: any) => {
+    const response = await axiosWithToken.put(`${HTTP_SERVER}/api/quizzes/${quizId}`, updates);
     return response.data;
 };
