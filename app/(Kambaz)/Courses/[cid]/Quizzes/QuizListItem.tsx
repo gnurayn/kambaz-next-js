@@ -1,15 +1,28 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { Dropdown } from "react-bootstrap";
-import { BsCheckCircleFill } from "react-icons/bs";
+import { FaCheckCircle, FaCircle } from "react-icons/fa";
 import { IoEllipsisVertical } from "react-icons/io5";
+import { RxRocket } from "react-icons/rx";
 import { useAuth } from "../../../Account/useAuth";
+
+const CheckCircle = FaCheckCircle as React.ElementType;
+const Circle = FaCircle as React.ElementType;
 
 interface QuizListItemProps {
     quiz: any;
     courseId: string;
     onDelete: (quizId: string) => void;
     onPublishToggle: (quizId: string, published: boolean) => void;
+}
+
+function GreenCheckmark() {
+    return (
+        <span className="me-1 position-relative">
+            <CheckCircle style={{ top: "2px" }} className="text-success me-1 position-absolute fs-5" />
+            <Circle className="text-white me-1 fs-6" />
+        </span>
+    );
 }
 
 export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle }: QuizListItemProps) {
@@ -22,7 +35,7 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
         const untilDate = new Date(quiz.availableUntilDate);
 
         if (now > untilDate) {
-            return { text: "Closed", color: "#6c757d" };
+            return { text: "Closed", color: "#000" };
         } else if (now >= availableDate && now <= untilDate) {
             return { text: "Available", color: "#000" };
         } else {
@@ -53,6 +66,7 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
         onPublishToggle(quiz._id, !quiz.published);
     };
 
+    // Format date from "2023-09-21" to "Sep 21"
     const formatDate = (dateStr: string) => {
         const date = new Date(dateStr);
         return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -61,8 +75,9 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
     return (
         <div
             className="d-flex align-items-start border-bottom py-3 position-relative"
-            style={{ paddingLeft: "20px" }}
+            style={{ paddingLeft: "20px", paddingRight: "20px" }}
         >
+            {/* Green left border */}
             <div
                 style={{
                     position: "absolute",
@@ -70,14 +85,28 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
                     top: 0,
                     bottom: 0,
                     width: "4px",
-                    backgroundColor: "#4caf50"
+                    backgroundColor: "#28a745"
                 }}
             />
 
+            {/* Gray right border */}
+            <div
+                style={{
+                    position: "absolute",
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: "1px",
+                    backgroundColor: "#dee2e6"
+                }}
+            />
+
+            {/* Left Icon - Rocket */}
             <div className="me-3">
-                <span style={{ fontSize: "24px" }}>📝</span>
+                <RxRocket style={{ fontSize: "24px", color: "#28a745" }} />
             </div>
 
+            {/* Quiz Content */}
             <div className="flex-grow-1">
                 <div className="d-flex justify-content-between align-items-start">
                     <div>
@@ -93,7 +122,7 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
                         >
                             {quiz.title}
                         </h5>
-                        <div style={{ color: "#6c757d", fontSize: "14px" }}>
+                        <div style={{ color: "#000", fontSize: "14px" }}>
                             <span style={{ color: availability.color }}>
                                 <strong>{availability.text}</strong>
                             </span>
@@ -112,23 +141,23 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
                         </div>
                     </div>
 
+                    {/* Right Side: Checkmark + Three Dots Dropdown */}
                     <div className="d-flex align-items-center gap-2">
-
+                        {/* Checkmark (published/unpublished) */}
                         {canEditCourse && (
                             <button
                                 onClick={handlePublishToggle}
                                 className="btn btn-link p-0"
                                 style={{
-                                    fontSize: "20px",
-                                    textDecoration: "none",
-                                    color: quiz.published ? "#28a745" : "#6c757d"
+                                    textDecoration: "none"
                                 }}
                                 title={quiz.published ? "Published - Click to unpublish" : "Unpublished - Click to publish"}
                             >
-                                <BsCheckCircleFill />
+                                {quiz.published ? <GreenCheckmark /> : <Circle className="text-secondary fs-5" />}
                             </button>
                         )}
 
+                        {/* Three Dots with Dropdown */}
                         {canEditCourse && (
                             <Dropdown align="end">
                                 <Dropdown.Toggle

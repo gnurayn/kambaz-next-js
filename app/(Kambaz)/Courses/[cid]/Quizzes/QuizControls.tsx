@@ -1,14 +1,15 @@
 "use client";
-import { FaPlus, FaEllipsisV } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
+import { IoEllipsisVertical } from "react-icons/io5";
 import React from "react";
-import { Button, Form, Dropdown } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useParams, useRouter } from "next/navigation";
 import * as client from "./client";
 
 const Plus = FaPlus as React.ElementType;
 const Search = FaSearch as React.ElementType;
-const Ellipsis = FaEllipsisV as React.ElementType;
+const EllipsisVertical = IoEllipsisVertical as React.ElementType;
 
 interface QuizControlsProps {
     onQuizCreated: (quiz: any) => void;
@@ -49,6 +50,7 @@ export default function QuizControls({ onQuizCreated, searchQuery, onSearchChang
             const createdQuiz = await client.createQuizForCourse(cid as string, newQuiz);
             onQuizCreated(createdQuiz);
 
+            // Navigate to quiz details page
             router.push(`/Courses/${cid}/Quizzes/${createdQuiz._id}`);
         } catch (error) {
             console.error("Failed to create quiz:", error);
@@ -91,28 +93,14 @@ export default function QuizControls({ onQuizCreated, searchQuery, onSearchChang
                     Quiz
                 </Button>
 
-                <Dropdown align="end">
-                    <Dropdown.Toggle
-                        variant="secondary"
-                        size="lg"
-                        id="wd-quiz-menu"
-                    >
-                        <Ellipsis />
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                        <Dropdown.Item disabled>
-                            Edit (Coming Soon)
-                        </Dropdown.Item>
-                        <Dropdown.Item disabled>
-                            Delete (Coming Soon)
-                        </Dropdown.Item>
-                        <Dropdown.Divider />
-                        <Dropdown.Item disabled>
-                            Publish (Coming Soon)
-                        </Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
+                {/* Static Ellipsis (no dropdown) */}
+                <Button
+                    variant="secondary"
+                    size="lg"
+                    id="wd-quiz-menu"
+                >
+                    <EllipsisVertical />
+                </Button>
             </div>
         </div>
     );
