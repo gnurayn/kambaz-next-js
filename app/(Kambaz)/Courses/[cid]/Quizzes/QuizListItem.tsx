@@ -29,6 +29,10 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
     const router = useRouter();
     const { canEditCourse, isStudent } = useAuth();
 
+    console.log("Quiz object:", quiz);
+    console.log("Quiz ID:", quiz._id);
+    console.log("Quiz id:", quiz.id);
+
     const getAvailabilityStatus = () => {
         const now = new Date();
         const availableDate = new Date(quiz.availableFromDate);
