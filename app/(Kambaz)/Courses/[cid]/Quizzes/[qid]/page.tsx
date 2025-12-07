@@ -2,6 +2,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
+import { FaPencilAlt } from "react-icons/fa";
 import { useAuth } from "../../../../Account/useAuth";
 import * as client from "../client";
 
@@ -52,8 +53,11 @@ export default function QuizDetails() {
                 <Button variant="outline-secondary">
                     Preview
                 </Button>
-                <Button variant="outline-secondary">
-                    <span>✏️</span> Edit
+                <Button
+                    variant="outline-secondary"
+                    onClick={() => router.push(`/Courses/${cid}/Quizzes/${qid}/edit`)}
+                >
+                    <FaPencilAlt /> Edit
                 </Button>
             </div>
 
