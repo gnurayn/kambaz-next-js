@@ -2,7 +2,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Button, Form, Nav } from "react-bootstrap";
-import * as client from "../client";
+import * as client from "../../client";
 
 export default function QuizEditor() {
     const { cid, qid } = useParams();

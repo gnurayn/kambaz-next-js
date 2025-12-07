@@ -57,7 +57,7 @@ export default function QuizDetails() {
                     variant="outline-secondary"
                     onClick={() => router.push(`/Courses/${cid}/Quizzes/${qid}/edit`)}
                 >
-                    <FaPencilAlt /> Edit
+                    Edit <FaPencilAlt />
                 </Button>
             </div>
 
