@@ -2,6 +2,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Button, Form, Nav } from "react-bootstrap";
+import { IoEllipsisVertical } from "react-icons/io5";
 import * as client from "../../client";
 
 export default function QuizEditor() {
@@ -62,14 +63,20 @@ export default function QuizEditor() {
 
     return (
         <div className="p-4">
-            {/* Header with Published Status and Points */}
+            {/* Header with Points, Published Status, and Ellipsis */}
             <div className="d-flex justify-content-end align-items-center mb-3">
                 <div className="d-flex align-items-center gap-3">
+                    <span>Points {quiz.points}</span>
                     <span className="text-muted">
                         {quiz.published ? "✓ Published" : "○ Not Published"}
                     </span>
-                    <span>Points {quiz.points}</span>
-                    <button className="btn btn-link">⋮</button>
+                    <Button
+                        variant="secondary"
+                        size="sm"
+                        style={{ cursor: "default" }}
+                    >
+                        <IoEllipsisVertical />
+                    </Button>
                 </div>
             </div>
 
@@ -117,9 +124,6 @@ export default function QuizEditor() {
                             onChange={(e) => setQuiz({ ...quiz, description: e.target.value })}
                             placeholder="Enter quiz instructions..."
                         />
-                        <div className="text-end mt-1">
-                            <small className="text-muted">0 words</small>
-                        </div>
                     </Form.Group>
 
                     {/* Quiz Type */}
@@ -207,6 +211,95 @@ export default function QuizEditor() {
                                 checked={quiz.multipleAttempts}
                                 onChange={(e) => setQuiz({ ...quiz, multipleAttempts: e.target.checked })}
                             />
+                        </Form.Group>
+
+                        {/* Show Correct Answers */}
+                        <Form.Group className="mb-3">
+                            <div className="row align-items-center">
+                                <div className="col-4">
+                                    <Form.Label className="mb-0">Show Correct Answers</Form.Label>
+                                </div>
+                                <div className="col-8">
+                                    <Form.Select
+                                        value={quiz.showCorrectAnswers ? "Immediately" : "Never"}
+                                        onChange={(e) => setQuiz({ ...quiz, showCorrectAnswers: e.target.value === "Immediately" })}
+                                    >
+                                        <option value="Never">Never</option>
+                                        <option value="Immediately">Immediately</option>
+                                    </Form.Select>
+                                </div>
+                            </div>
+                        </Form.Group>
+
+                        {/* Access Code */}
+                        <Form.Group className="mb-3">
+                            <div className="row align-items-center">
+                                <div className="col-4">
+                                    <Form.Label className="mb-0">Access Code</Form.Label>
+                                </div>
+                                <div className="col-8">
+                                    <Form.Control
+                                        type="text"
+                                        value={quiz.accessCode || ""}
+                                        onChange={(e) => setQuiz({ ...quiz, accessCode: e.target.value })}
+                                        placeholder="Leave blank for no access code"
+                                    />
+                                </div>
+                            </div>
+                        </Form.Group>
+
+                        {/* One Question at a Time */}
+                        <Form.Group className="mb-3">
+                            <div className="row align-items-center">
+                                <div className="col-4">
+                                    <Form.Label className="mb-0">One Question at a Time</Form.Label>
+                                </div>
+                                <div className="col-8">
+                                    <Form.Select
+                                        value={quiz.oneQuestionAtATime ? "Yes" : "No"}
+                                        onChange={(e) => setQuiz({ ...quiz, oneQuestionAtATime: e.target.value === "Yes" })}
+                                    >
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </Form.Select>
+                                </div>
+                            </div>
+                        </Form.Group>
+
+                        {/* Webcam Required */}
+                        <Form.Group className="mb-3">
+                            <div className="row align-items-center">
+                                <div className="col-4">
+                                    <Form.Label className="mb-0">Webcam Required</Form.Label>
+                                </div>
+                                <div className="col-8">
+                                    <Form.Select
+                                        value={quiz.webcamRequired ? "Yes" : "No"}
+                                        onChange={(e) => setQuiz({ ...quiz, webcamRequired: e.target.value === "Yes" })}
+                                    >
+                                        <option value="No">No</option>
+                                        <option value="Yes">Yes</option>
+                                    </Form.Select>
+                                </div>
+                            </div>
+                        </Form.Group>
+
+                        {/* Lock Questions After Answering */}
+                        <Form.Group className="mb-3">
+                            <div className="row align-items-center">
+                                <div className="col-4">
+                                    <Form.Label className="mb-0">Lock Questions After Answering</Form.Label>
+                                </div>
+                                <div className="col-8">
+                                    <Form.Select
+                                        value={quiz.lockQuestionsAfterAnswering ? "Yes" : "No"}
+                                        onChange={(e) => setQuiz({ ...quiz, lockQuestionsAfterAnswering: e.target.value === "Yes" })}
+                                    >
+                                        <option value="No">No</option>
+                                        <option value="Yes">Yes</option>
+                                    </Form.Select>
+                                </div>
+                            </div>
                         </Form.Group>
                     </div>
 
