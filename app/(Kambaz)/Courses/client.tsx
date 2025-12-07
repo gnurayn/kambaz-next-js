@@ -74,6 +74,11 @@ export const createAssignmentForCourse = async (courseId: string, assignment: an
     return response.data;
 }
 
+export const findAssignmentById = async (assignmentId: string) => {
+    const response = await axiosWithToken.get(`${ASSIGNMENTS_API}/${assignmentId}`);
+    return response.data;
+};
+
 export const deleteAssignment = async (assignmentId: string) => {
     const response = await axiosWithToken.delete(`${ASSIGNMENTS_API}/${assignmentId}`);
     return response.data;
