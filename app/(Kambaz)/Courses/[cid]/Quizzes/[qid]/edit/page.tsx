@@ -62,13 +62,13 @@ export default function QuizEditor() {
 
     return (
         <div className="p-4">
-            {/* Header with Points and Published Status */}
-            <div className="d-flex justify-content-between align-items-center mb-3">
-                <h4>Points {quiz.points}</h4>
-                <div className="d-flex align-items-center gap-2">
+            {/* Header with Published Status and Points */}
+            <div className="d-flex justify-content-end align-items-center mb-3">
+                <div className="d-flex align-items-center gap-3">
                     <span className="text-muted">
                         {quiz.published ? "✓ Published" : "○ Not Published"}
                     </span>
+                    <span>Points {quiz.points}</span>
                     <button className="btn btn-link">⋮</button>
                 </div>
             </div>
@@ -110,30 +110,9 @@ export default function QuizEditor() {
                     {/* Quiz Instructions */}
                     <Form.Group className="mb-3">
                         <Form.Label>Quiz Instructions:</Form.Label>
-                        <div className="border rounded p-2 mb-2" style={{ backgroundColor: "#f5f5f5" }}>
-                            <div className="d-flex gap-2 mb-2" style={{ fontSize: "12px" }}>
-                                <button className="btn btn-sm btn-light">Edit</button>
-                                <button className="btn btn-sm btn-light">View</button>
-                                <button className="btn btn-sm btn-light">Insert</button>
-                                <button className="btn btn-sm btn-light">Format</button>
-                                <button className="btn btn-sm btn-light">Tools</button>
-                                <button className="btn btn-sm btn-light">Table</button>
-                            </div>
-                            <div className="d-flex gap-2 mb-2" style={{ fontSize: "12px" }}>
-                                <select className="form-select form-select-sm" style={{ width: "80px" }}>
-                                    <option>12pt</option>
-                                </select>
-                                <select className="form-select form-select-sm" style={{ width: "120px" }}>
-                                    <option>Paragraph</option>
-                                </select>
-                                <button className="btn btn-sm btn-light"><strong>B</strong></button>
-                                <button className="btn btn-sm btn-light"><em>I</em></button>
-                                <button className="btn btn-sm btn-light"><u>U</u></button>
-                            </div>
-                        </div>
                         <Form.Control
                             as="textarea"
-                            rows={4}
+                            rows={6}
                             value={quiz.description || ""}
                             onChange={(e) => setQuiz({ ...quiz, description: e.target.value })}
                             placeholder="Enter quiz instructions..."
