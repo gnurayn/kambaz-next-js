@@ -376,8 +376,6 @@ export default function QuizEditor() {
                                 </Form.Group>
                             </div>
                         </div>
-
-                        <Button variant="link" className="p-0">+ Add</Button>
                     </div>
 
                     {/* Action Buttons */}
