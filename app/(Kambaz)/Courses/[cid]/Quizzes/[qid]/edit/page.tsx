@@ -5,6 +5,7 @@ import { Button, Dropdown, Form, Nav } from "react-bootstrap";
 import { IoEllipsisVertical } from "react-icons/io5";
 import * as client from "../../client";
 import MultipleChoiceEditor from "./MultipleChoiceEditor";
+import TrueFalseEditor from "./TrueFalseEditor";
 
 export default function QuizEditor() {
     const { cid, qid } = useParams();
@@ -488,17 +489,32 @@ export default function QuizEditor() {
 
                     {/* New Question Editor */}
                     {editingQuestionIndex === questions.length && (
-                        <MultipleChoiceEditor
-                            onSave={(newQuestion) => {
-                                const newQuestions = [...questions, newQuestion];
-                                setQuestions(newQuestions);
-                                setEditingQuestionIndex(null);
-                                // Update quiz points
-                                const totalPoints = newQuestions.reduce((sum, q) => sum + q.points, 0);
-                                setQuiz({ ...quiz, points: totalPoints, questionCount: newQuestions.length });
-                            }}
-                            onCancel={() => setEditingQuestionIndex(null)}
-                        />
+                        <>
+                            {newQuestionType === "multiple-choice" && (
+                                <MultipleChoiceEditor
+                                    onSave={(newQuestion) => {
+                                        const newQuestions = [...questions, newQuestion];
+                                        setQuestions(newQuestions);
+                                        setEditingQuestionIndex(null);
+                                        const totalPoints = newQuestions.reduce((sum, q) => sum + q.points, 0);
+                                        setQuiz({ ...quiz, points: totalPoints, questionCount: newQuestions.length });
+                                    }}
+                                    onCancel={() => setEditingQuestionIndex(null)}
+                                />
+                            )}
+                            {newQuestionType === "true-false" && (
+                                <TrueFalseEditor
+                                    onSave={(newQuestion) => {
+                                        const newQuestions = [...questions, newQuestion];
+                                        setQuestions(newQuestions);
+                                        setEditingQuestionIndex(null);
+                                        const totalPoints = newQuestions.reduce((sum, q) => sum + q.points, 0);
+                                        setQuiz({ ...quiz, points: totalPoints, questionCount: newQuestions.length });
+                                    }}
+                                    onCancel={() => setEditingQuestionIndex(null)}
+                                />
+                            )}
+                        </>
                     )}
 
                     {/* Empty State */}
