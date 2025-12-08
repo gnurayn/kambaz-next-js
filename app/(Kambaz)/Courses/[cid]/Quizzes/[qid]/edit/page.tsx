@@ -23,16 +23,17 @@ export default function QuizEditor() {
         try {
             const data = await client.findQuizById(qid as string);
             setQuiz(data);
+            setQuestions(data.questions || []); // ← Add this line
         } catch (error) {
             console.error("Failed to load quiz:", error);
         } finally {
             setLoading(false);
         }
     };
-
     const handleSave = async () => {
         try {
-            await client.updateQuiz(qid as string, quiz);
+            const quizToSave = { ...quiz, questions }; // ← Include questions
+            await client.updateQuiz(qid as string, quizToSave);
             alert("Quiz saved successfully!");
             router.push(`/Courses/${cid}/Quizzes/${qid}`);
         } catch (error) {
@@ -43,7 +44,8 @@ export default function QuizEditor() {
 
     const handleSaveAndPublish = async () => {
         try {
-            await client.updateQuiz(qid as string, { ...quiz, published: true });
+            const quizToSave = { ...quiz, questions, published: true }; // ← Include questions
+            await client.updateQuiz(qid as string, quizToSave);
             alert("Quiz saved and published!");
             router.push(`/Courses/${cid}/Quizzes`);
         } catch (error) {
