@@ -434,19 +434,36 @@ export default function QuizEditor() {
                     {questions.map((q, index) => (
                         <div key={index}>
                             {editingQuestionIndex === index ? (
-                                <MultipleChoiceEditor
-                                    question={q}
-                                    onSave={(updatedQuestion) => {
-                                        const newQuestions = [...questions];
-                                        newQuestions[index] = updatedQuestion;
-                                        setQuestions(newQuestions);
-                                        setEditingQuestionIndex(null);
-                                        // Update quiz points
-                                        const totalPoints = newQuestions.reduce((sum, q) => sum + q.points, 0);
-                                        setQuiz({ ...quiz, points: totalPoints, questionCount: newQuestions.length });
-                                    }}
-                                    onCancel={() => setEditingQuestionIndex(null)}
-                                />
+                                <>
+                                    {q.type === "multiple-choice" && (
+                                        <MultipleChoiceEditor
+                                            question={q}
+                                            onSave={(updatedQuestion) => {
+                                                const newQuestions = [...questions];
+                                                newQuestions[index] = updatedQuestion;
+                                                setQuestions(newQuestions);
+                                                setEditingQuestionIndex(null);
+                                                const totalPoints = newQuestions.reduce((sum, q) => sum + q.points, 0);
+                                                setQuiz({ ...quiz, points: totalPoints, questionCount: newQuestions.length });
+                                            }}
+                                            onCancel={() => setEditingQuestionIndex(null)}
+                                        />
+                                    )}
+                                    {q.type === "true-false" && (
+                                        <TrueFalseEditor
+                                            question={q}
+                                            onSave={(updatedQuestion) => {
+                                                const newQuestions = [...questions];
+                                                newQuestions[index] = updatedQuestion;
+                                                setQuestions(newQuestions);
+                                                setEditingQuestionIndex(null);
+                                                const totalPoints = newQuestions.reduce((sum, q) => sum + q.points, 0);
+                                                setQuiz({ ...quiz, points: totalPoints, questionCount: newQuestions.length });
+                                            }}
+                                            onCancel={() => setEditingQuestionIndex(null)}
+                                        />
+                                    )}
+                                </>
                             ) : (
                                 <div className="border rounded p-3 mb-3">
                                     <div className="d-flex justify-content-between align-items-start">
@@ -454,7 +471,7 @@ export default function QuizEditor() {
                                             <h6>{q.title}</h6>
                                             <p className="text-muted small mb-1">{q.question}</p>
                                             <p className="small mb-0">
-                                                <strong>Type:</strong> Multiple Choice | <strong>Points:</strong> {q.points}
+                                                <strong>Type:</strong> {q.type === "multiple-choice" ? "Multiple Choice" : "True/False"} | <strong>Points:</strong> {q.points}
                                             </p>
                                         </div>
                                         <div className="d-flex gap-2">
@@ -472,7 +489,6 @@ export default function QuizEditor() {
                                                     if (confirm(`Are you sure you want to delete "${q.title}"?`)) {
                                                         const newQuestions = questions.filter((_, i) => i !== index);
                                                         setQuestions(newQuestions);
-                                                        // Update quiz points and count
                                                         const totalPoints = newQuestions.reduce((sum, q) => sum + q.points, 0);
                                                         setQuiz({ ...quiz, points: totalPoints, questionCount: newQuestions.length });
                                                     }
