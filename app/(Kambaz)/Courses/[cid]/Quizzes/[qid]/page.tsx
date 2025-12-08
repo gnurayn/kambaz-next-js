@@ -50,7 +50,10 @@ export default function QuizDetails() {
         <div className="p-4">
             {/* Header Buttons */}
             <div className="d-flex justify-content-end gap-2 mb-3">
-                <Button variant="outline-secondary">
+                <Button
+                    variant="outline-secondary"
+                    onClick={() => router.push(`/Courses/${cid}/Quizzes/${qid}/preview`)}
+                >
                     Preview
                 </Button>
                 <Button
