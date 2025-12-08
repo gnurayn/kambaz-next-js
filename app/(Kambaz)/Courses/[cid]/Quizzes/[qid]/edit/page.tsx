@@ -6,6 +6,7 @@ import { IoEllipsisVertical } from "react-icons/io5";
 import * as client from "../../client";
 import MultipleChoiceEditor from "./MultipleChoiceEditor";
 import TrueFalseEditor from "./TrueFalseEditor";
+import FillInBlankEditor from "./FillInBlankEditor";
 
 export default function QuizEditor() {
     const { cid, qid } = useParams();
@@ -67,6 +68,15 @@ export default function QuizEditor() {
     if (!quiz) {
         return <div className="p-4">Quiz not found</div>;
     }
+
+    const getQuestionTypeLabel = (type: string) => {
+        switch (type) {
+            case "multiple-choice": return "Multiple Choice";
+            case "true-false": return "True/False";
+            case "fill-in-blank": return "Fill in the Blank";
+            default: return type;
+        }
+    };
 
     return (
         <div className="p-4">
@@ -426,6 +436,14 @@ export default function QuizEditor() {
                                 >
                                     True/False
                                 </Dropdown.Item>
+                                <Dropdown.Item
+                                    onClick={() => {
+                                        setNewQuestionType("fill-in-blank");
+                                        setEditingQuestionIndex(questions.length);
+                                    }}
+                                >
+                                    Fill in the Blank
+                                </Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>
@@ -463,6 +481,20 @@ export default function QuizEditor() {
                                             onCancel={() => setEditingQuestionIndex(null)}
                                         />
                                     )}
+                                    {q.type === "fill-in-blank" && (
+                                        <FillInBlankEditor
+                                            question={q}
+                                            onSave={(updatedQuestion) => {
+                                                const newQuestions = [...questions];
+                                                newQuestions[index] = updatedQuestion;
+                                                setQuestions(newQuestions);
+                                                setEditingQuestionIndex(null);
+                                                const totalPoints = newQuestions.reduce((sum, q) => sum + q.points, 0);
+                                                setQuiz({ ...quiz, points: totalPoints, questionCount: newQuestions.length });
+                                            }}
+                                            onCancel={() => setEditingQuestionIndex(null)}
+                                        />
+                                    )}
                                 </>
                             ) : (
                                 <div className="border rounded p-3 mb-3">
@@ -471,7 +503,7 @@ export default function QuizEditor() {
                                             <h6>{q.title}</h6>
                                             <p className="text-muted small mb-1">{q.question}</p>
                                             <p className="small mb-0">
-                                                <strong>Type:</strong> {q.type === "multiple-choice" ? "Multiple Choice" : "True/False"} | <strong>Points:</strong> {q.points}
+                                                <strong>Type:</strong> {getQuestionTypeLabel(q.type)} | <strong>Points:</strong> {q.points}
                                             </p>
                                         </div>
                                         <div className="d-flex gap-2">
@@ -520,6 +552,18 @@ export default function QuizEditor() {
                             )}
                             {newQuestionType === "true-false" && (
                                 <TrueFalseEditor
+                                    onSave={(newQuestion) => {
+                                        const newQuestions = [...questions, newQuestion];
+                                        setQuestions(newQuestions);
+                                        setEditingQuestionIndex(null);
+                                        const totalPoints = newQuestions.reduce((sum, q) => sum + q.points, 0);
+                                        setQuiz({ ...quiz, points: totalPoints, questionCount: newQuestions.length });
+                                    }}
+                                    onCancel={() => setEditingQuestionIndex(null)}
+                                />
+                            )}
+                            {newQuestionType === "fill-in-blank" && (
+                                <FillInBlankEditor
                                     onSave={(newQuestion) => {
                                         const newQuestions = [...questions, newQuestion];
                                         setQuestions(newQuestions);
