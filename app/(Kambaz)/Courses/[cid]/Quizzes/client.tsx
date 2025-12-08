@@ -41,3 +41,25 @@ export const updateQuiz = async (quizId: string, updates: any) => {
     const response = await axiosWithToken.put(`${HTTP_SERVER}/api/quizzes/${quizId}`, updates);
     return response.data;
 };
+
+// ===== Quiz Attempt Functions =====
+
+export const submitQuizAttempt = async (quizId: string, answers: Record<number, string>) => {
+    const response = await axiosWithToken.post(`${HTTP_SERVER}/api/quizzes/${quizId}/attempts`, { answers });
+    return response.data;
+};
+
+export const getLatestAttempt = async (quizId: string) => {
+    try {
+        const response = await axiosWithToken.get(`${HTTP_SERVER}/api/quizzes/${quizId}/attempts/latest`);
+        return response.data;
+    } catch (error: any) {
+        if (error.response?.status === 404) return null;
+        throw error;
+    }
+};
+
+export const getStudentAttempts = async (quizId: string) => {
+    const response = await axiosWithToken.get(`${HTTP_SERVER}/api/quizzes/${quizId}/attempts`);
+    return response.data;
+};

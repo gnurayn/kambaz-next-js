@@ -29,7 +29,7 @@ export default function QuizDetails() {
     };
 
     const handleStartQuiz = () => {
-        alert("Quiz taking interface will be implemented in the next phase");
+        router.push(`/Courses/${cid}/Quizzes/${qid}/take`);
     };
 
     const formatDate = (dateStr: string) => {
