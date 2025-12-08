@@ -1,7 +1,7 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Button, Form, Nav } from "react-bootstrap";
+import { Button, Dropdown, Form, Nav } from "react-bootstrap";
 import { IoEllipsisVertical } from "react-icons/io5";
 import * as client from "../../client";
 import MultipleChoiceEditor from "./MultipleChoiceEditor";
@@ -13,6 +13,7 @@ export default function QuizEditor() {
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState("details");
     const [questions, setQuestions] = useState<any[]>([]);
+    const [newQuestionType, setNewQuestionType] = useState<string>("multiple-choice");
     const [editingQuestionIndex, setEditingQuestionIndex] = useState<number | null>(null);
 
     useEffect(() => {
@@ -402,12 +403,30 @@ export default function QuizEditor() {
             {activeTab === "questions" && (
                 <div>
                     <div className="mb-3">
-                        <Button
-                            variant="danger"
-                            onClick={() => setEditingQuestionIndex(questions.length)}
-                        >
-                            + New Question
-                        </Button>
+                        <Dropdown>
+                            <Dropdown.Toggle variant="danger" id="dropdown-new-question">
+                                + New Question
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                <Dropdown.Item
+                                    onClick={() => {
+                                        setNewQuestionType("multiple-choice");
+                                        setEditingQuestionIndex(questions.length);
+                                    }}
+                                >
+                                    Multiple Choice
+                                </Dropdown.Item>
+                                <Dropdown.Item
+                                    onClick={() => {
+                                        setNewQuestionType("true-false");
+                                        setEditingQuestionIndex(questions.length);
+                                    }}
+                                >
+                                    True/False
+                                </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </div>
 
                     {/* List of Questions */}

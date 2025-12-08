@@ -104,14 +104,22 @@ export default function MultipleChoiceEditor({ question, onSave, onCancel }: Mul
 
     return (
         <div className="border rounded p-4 mb-3">
-            <div className="d-flex justify-content-between align-items-center mb-3">
+            {/* Top Row: Title, Type, Points */}
+            <div className="d-flex align-items-center gap-3 mb-3">
                 <Form.Control
                     type="text"
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     placeholder="Question Title"
-                    className="w-50"
+                    style={{ flex: 1 }}
                 />
+                <Form.Select
+                    value="multiple-choice"
+                    disabled
+                    style={{ width: "200px" }}
+                >
+                    <option value="multiple-choice">Multiple Choice</option>
+                </Form.Select>
                 <div className="d-flex align-items-center gap-2">
                     <span>pts:</span>
                     <Form.Control
