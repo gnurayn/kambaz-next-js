@@ -471,6 +471,20 @@ export default function QuizEditor() {
                             <p>No questions yet. Click "+ New Question" to add one.</p>
                         </div>
                     )}
+
+                    {/* Save Buttons at Bottom */}
+                    <hr className="my-4" />
+                    <div className="d-flex justify-content-end gap-2">
+                        <Button variant="light" onClick={handleCancel}>
+                            Cancel
+                        </Button>
+                        <Button variant="light" onClick={handleSave}>
+                            Save
+                        </Button>
+                        <Button variant="danger" onClick={handleSaveAndPublish}>
+                            Save & Publish
+                        </Button>
+                    </div>
                 </div>
             )}
         </div>
