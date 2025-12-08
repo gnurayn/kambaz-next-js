@@ -437,13 +437,30 @@ export default function QuizEditor() {
                                                 <strong>Type:</strong> Multiple Choice | <strong>Points:</strong> {q.points}
                                             </p>
                                         </div>
-                                        <Button
-                                            variant="outline-secondary"
-                                            size="sm"
-                                            onClick={() => setEditingQuestionIndex(index)}
-                                        >
-                                            Edit
-                                        </Button>
+                                        <div className="d-flex gap-2">
+                                            <Button
+                                                variant="outline-secondary"
+                                                size="sm"
+                                                onClick={() => setEditingQuestionIndex(index)}
+                                            >
+                                                Edit
+                                            </Button>
+                                            <Button
+                                                variant="outline-danger"
+                                                size="sm"
+                                                onClick={() => {
+                                                    if (confirm(`Are you sure you want to delete "${q.title}"?`)) {
+                                                        const newQuestions = questions.filter((_, i) => i !== index);
+                                                        setQuestions(newQuestions);
+                                                        // Update quiz points and count
+                                                        const totalPoints = newQuestions.reduce((sum, q) => sum + q.points, 0);
+                                                        setQuiz({ ...quiz, points: totalPoints, questionCount: newQuestions.length });
+                                                    }
+                                                }}
+                                            >
+                                                Delete
+                                            </Button>
+                                        </div>
                                     </div>
                                 </div>
                             )}
