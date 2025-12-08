@@ -9,6 +9,7 @@ interface TrueFalseQuestion {
     points: number;
     question: string;
     correctAnswer: boolean;
+    answers?: never; // Explicitly exclude answers for true/false
 }
 
 interface TrueFalseEditorProps {
@@ -37,7 +38,20 @@ export default function TrueFalseEditor({ question, onSave, onCancel }: TrueFals
             alert("Please enter the question text");
             return;
         }
-        onSave(formData);
+
+        // Ensure we're only sending the correct fields for true/false questions
+        const questionToSave: TrueFalseQuestion = {
+            type: "true-false",
+            title: formData.title,
+            points: formData.points,
+            question: formData.question,
+            correctAnswer: formData.correctAnswer,
+        };
+
+        // Explicitly remove answers field if it exists
+        const { answers, ...cleanQuestion } = questionToSave as any;
+
+        onSave(cleanQuestion);
     };
 
     return (
