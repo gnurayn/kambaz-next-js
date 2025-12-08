@@ -92,7 +92,7 @@ export default function QuizPreviewPage() {
             return correctAns?.text || "";
         }
 
-        if (question.type === "fill-in-the-blank" && question.possibleAnswers) {
+        if (question.type === "fill-in-blank" && question.possibleAnswers) {
             return question.possibleAnswers.join(", ");
         }
 
@@ -118,7 +118,7 @@ export default function QuizPreviewPage() {
                     earnedPoints += question.points;
                 }
             } else if (
-                question.type === "fill-in-the-blank" &&
+                question.type === "fill-in-blank" &&
                 question.possibleAnswers
             ) {
                 const userAns = String(userAnswer).toLowerCase().trim();
@@ -156,7 +156,7 @@ export default function QuizPreviewPage() {
             return userAnswer === correctAns;
         }
 
-        if (question.type === "fill-in-the-blank" && question.possibleAnswers) {
+        if (question.type === "fill-in-blank" && question.possibleAnswers) {
             const userAns = String(userAnswer).toLowerCase().trim();
             return question.possibleAnswers.some(
                 (possible) => possible.toLowerCase().trim() === userAns
@@ -194,7 +194,7 @@ export default function QuizPreviewPage() {
                 </div>
                 {!submitted && (
                     <button
-                        onClick={() => router.push(`/Courses/${cid}/Quizzes/${qid}/edit-questions`)}
+                        onClick={() => router.push(`/Courses/${cid}/Quizzes/${qid}/edit`)}
                         className="btn btn-primary"
                     >
                         Edit Quiz
@@ -299,7 +299,7 @@ export default function QuizPreviewPage() {
                                     )}
 
                                     {/* Fill in the Blank */}
-                                    {question.type === "fill-in-the-blank" && (
+                                    {question.type === "fill-in-blank" && (
                                         <input
                                             type="text"
                                             className="form-control"
@@ -410,7 +410,7 @@ export default function QuizPreviewPage() {
                         </button>
                         <button
                             onClick={() =>
-                                router.push(`/Courses/${cid}/Quizzes/${qid}/edit-questions`)
+                                router.push(`/Courses/${cid}/Quizzes/${qid}/edit`)
                             }
                             className="btn btn-primary btn-lg px-4"
                         >
