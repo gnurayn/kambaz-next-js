@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Button, Form, Nav } from "react-bootstrap";
 import { IoEllipsisVertical } from "react-icons/io5";
 import * as client from "../../client";
+import MultipleChoiceEditor from "./MultipleChoiceEditor";
 
 export default function QuizEditor() {
     const { cid, qid } = useParams();
@@ -11,6 +12,8 @@ export default function QuizEditor() {
     const [quiz, setQuiz] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState("details");
+    const [questions, setQuestions] = useState<any[]>([]);
+    const [editingQuestionIndex, setEditingQuestionIndex] = useState<number | null>(null);
 
     useEffect(() => {
         loadQuiz();
@@ -157,10 +160,10 @@ export default function QuizEditor() {
                                     value={quiz.assignmentGroup}
                                     onChange={(e) => setQuiz({ ...quiz, assignmentGroup: e.target.value })}
                                 >
-                                    <option value="QUIZZES">QUIZZES</option>
-                                    <option value="EXAMS">EXAMS</option>
-                                    <option value="ASSIGNMENTS">ASSIGNMENTS</option>
-                                    <option value="PROJECT">PROJECT</option>
+                                    <option value="QUIZZES">Quizzes</option>
+                                    <option value="EXAMS">Exams</option>
+                                    <option value="ASSIGNMENTS">Assignments</option>
+                                    <option value="PROJECT">Project</option>
                                 </Form.Select>
                             </div>
                         </div>
@@ -393,11 +396,79 @@ export default function QuizEditor() {
                 </div>
             )}
 
-            {/* Questions Tab Content (placeholder) */}
+            {/* Questions Tab Content */}
             {activeTab === "questions" && (
-                <div className="p-4 text-center text-muted">
-                    <h5>Questions Editor</h5>
-                    <p>This section will be implemented next</p>
+                <div>
+                    <div className="mb-3">
+                        <Button
+                            variant="danger"
+                            onClick={() => setEditingQuestionIndex(questions.length)}
+                        >
+                            + New Question
+                        </Button>
+                    </div>
+
+                    {/* List of Questions */}
+                    {questions.map((q, index) => (
+                        <div key={index}>
+                            {editingQuestionIndex === index ? (
+                                <MultipleChoiceEditor
+                                    question={q}
+                                    onSave={(updatedQuestion) => {
+                                        const newQuestions = [...questions];
+                                        newQuestions[index] = updatedQuestion;
+                                        setQuestions(newQuestions);
+                                        setEditingQuestionIndex(null);
+                                        // Update quiz points
+                                        const totalPoints = newQuestions.reduce((sum, q) => sum + q.points, 0);
+                                        setQuiz({ ...quiz, points: totalPoints, questionCount: newQuestions.length });
+                                    }}
+                                    onCancel={() => setEditingQuestionIndex(null)}
+                                />
+                            ) : (
+                                <div className="border rounded p-3 mb-3">
+                                    <div className="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h6>{q.title}</h6>
+                                            <p className="text-muted small mb-1">{q.question}</p>
+                                            <p className="small mb-0">
+                                                <strong>Type:</strong> Multiple Choice | <strong>Points:</strong> {q.points}
+                                            </p>
+                                        </div>
+                                        <Button
+                                            variant="outline-secondary"
+                                            size="sm"
+                                            onClick={() => setEditingQuestionIndex(index)}
+                                        >
+                                            Edit
+                                        </Button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+
+                    {/* New Question Editor */}
+                    {editingQuestionIndex === questions.length && (
+                        <MultipleChoiceEditor
+                            onSave={(newQuestion) => {
+                                const newQuestions = [...questions, newQuestion];
+                                setQuestions(newQuestions);
+                                setEditingQuestionIndex(null);
+                                // Update quiz points
+                                const totalPoints = newQuestions.reduce((sum, q) => sum + q.points, 0);
+                                setQuiz({ ...quiz, points: totalPoints, questionCount: newQuestions.length });
+                            }}
+                            onCancel={() => setEditingQuestionIndex(null)}
+                        />
+                    )}
+
+                    {/* Empty State */}
+                    {questions.length === 0 && editingQuestionIndex === null && (
+                        <div className="text-center py-5 text-muted">
+                            <p>No questions yet. Click "+ New Question" to add one.</p>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
