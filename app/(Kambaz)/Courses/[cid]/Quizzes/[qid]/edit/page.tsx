@@ -230,6 +230,25 @@ export default function QuizEditor() {
                             />
                         </Form.Group>
 
+                        {quiz.multipleAttempts && (
+                            <Form.Group className="mb-3">
+                                <div className="row align-items-center">
+                                    <div className="col-4">
+                                        <Form.Label className="mb-0">How Many Attempts</Form.Label>
+                                    </div>
+                                    <div className="col-8">
+                                        <Form.Control
+                                            type="number"
+                                            min="1"
+                                            value={quiz.allowedAttempts || 1}
+                                            onChange={(e) => setQuiz({ ...quiz, allowedAttempts: parseInt(e.target.value) || 1 })}
+                                            style={{ width: "100px" }}
+                                        />
+                                    </div>
+                                </div>
+                            </Form.Group>
+                        )}
+
                         {/* Show Correct Answers */}
                         <Form.Group className="mb-3">
                             <div className="row align-items-center">
