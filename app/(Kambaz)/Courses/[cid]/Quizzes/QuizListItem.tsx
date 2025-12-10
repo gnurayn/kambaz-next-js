@@ -139,7 +139,7 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
                             {isStudent && quiz.lastScore !== undefined && (
                                 <>
                                     {" | "}
-                                    <strong>Score:</strong> {quiz.lastScore} pts
+                                    <strong>Score:</strong> {quiz.lastScore.toFixed(1)}%
                                 </>
                             )}
                         </div>

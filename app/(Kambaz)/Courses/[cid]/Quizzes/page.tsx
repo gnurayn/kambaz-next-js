@@ -20,7 +20,28 @@ export default function QuizzesPage() {
   const loadQuizzes = async () => {
     try {
       const data = await client.findQuizzesForCourse(cid as string);
-      setQuizzes(data);
+
+      // If student, fetch latest attempt scores for each quiz
+      if (isStudent) {
+        const quizzesWithScores = await Promise.all(
+          data.map(async (quiz: any) => {
+            try {
+              const latestAttempt = await client.getLatestAttempt(quiz._id);
+              return {
+                ...quiz,
+                lastScore: latestAttempt ? latestAttempt.score : undefined,
+                lastAttemptDate: latestAttempt ? latestAttempt.submittedAt : undefined
+              };
+            } catch (error) {
+              // No attempt yet, return quiz without score
+              return quiz;
+            }
+          })
+        );
+        setQuizzes(quizzesWithScores);
+      } else {
+        setQuizzes(data);
+      }
     } catch (error) {
       console.error("Failed to load quizzes:", error);
     } finally {
