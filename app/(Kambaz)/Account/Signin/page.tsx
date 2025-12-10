@@ -18,19 +18,15 @@ export default function Signin() {
       const response = await client.signin(credentials);
       if (!response) return;
 
-      // Extract user and token from response
       const { user, token } = response;
 
-      // Store user in Redux
       dispatch(setCurrentUser(user));
 
-      // Store both user and token in localStorage
       localStorage.setItem('currentUser', JSON.stringify(user));
       localStorage.setItem('token', token);
 
       console.log("✅ Signed in as:", user.username, "Role:", user.role);
 
-      // Redirect to dashboard
       router.push("/Dashboard");
     } catch (error) {
       console.error("❌ Signin failed:", error);

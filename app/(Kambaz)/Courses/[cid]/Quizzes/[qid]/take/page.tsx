@@ -77,11 +77,9 @@ export default function TakeQuizPage() {
             setLatestAttempt(attempt);
             setAttemptCount(attempts.length);
 
-            // If there's a latest attempt, show results
             if (attempt) {
                 setSubmitted(true);
             } else {
-                // Initialize empty answers
                 const initialAnswers: Record<number, string> = {};
                 quizData.questions?.forEach((_: Question, index: number) => {
                     initialAnswers[index] = "";
@@ -128,7 +126,6 @@ export default function TakeQuizPage() {
             return;
         }
 
-        // Reset for new attempt
         const initialAnswers: Record<number, string> = {};
         quiz.questions?.forEach((_, index) => {
             initialAnswers[index] = "";
@@ -158,7 +155,6 @@ export default function TakeQuizPage() {
 
     return (
         <div className="container" style={{ maxWidth: "900px", padding: "2rem" }}>
-            {/* Header */}
             <div className="mb-4">
                 <h1 className="mb-2">{quiz.title}</h1>
                 <p className="text-muted">
@@ -168,7 +164,6 @@ export default function TakeQuizPage() {
 
             {!submitted ? (
                 <>
-                    {/* Quiz Info */}
                     <div className="bg-light p-3 rounded mb-4">
                         <p className="mb-1">
                             <strong>Points:</strong> {quiz.points}
@@ -183,7 +178,6 @@ export default function TakeQuizPage() {
                         </p>
                     </div>
 
-                    {/* Questions */}
                     <div className="d-flex flex-column gap-4">
                         {quiz.questions?.map((question, index) => (
                             <div key={index} className="card">
@@ -195,7 +189,6 @@ export default function TakeQuizPage() {
 
                                     <p className="mb-3 fw-semibold">{question.question}</p>
 
-                                    {/* Multiple Choice */}
                                     {question.type === "multiple-choice" && question.answers && (
                                         <div className="d-flex flex-column gap-2">
                                             {question.answers.map((answer, answerIndex) => (
@@ -225,7 +218,6 @@ export default function TakeQuizPage() {
                                         </div>
                                     )}
 
-                                    {/* True/False */}
                                     {question.type === "true-false" && (
                                         <div className="d-flex flex-column gap-2">
                                             {["True", "False"].map((option) => (
@@ -255,7 +247,6 @@ export default function TakeQuizPage() {
                                         </div>
                                     )}
 
-                                    {/* Fill in the Blank */}
                                     {question.type === "fill-in-blank" && (
                                         <input
                                             type="text"
@@ -270,7 +261,6 @@ export default function TakeQuizPage() {
                         ))}
                     </div>
 
-                    {/* Submit Button */}
                     <div className="text-center mt-4">
                         <button
                             onClick={handleSubmit}
@@ -283,10 +273,8 @@ export default function TakeQuizPage() {
                 </>
             ) : (
                 <>
-                    {/* Results */}
                     {latestAttempt && (
                         <>
-                            {/* Score Summary */}
                             <div className="card mb-4">
                                 <div className="card-body">
                                     <h2 className="card-title mb-4">Quiz Results</h2>
@@ -305,7 +293,6 @@ export default function TakeQuizPage() {
                                 </div>
                             </div>
 
-                            {/* Detailed Results - Only if quiz allows showing correct answers */}
                             {quiz.showCorrectAnswers && (
                                 <div className="d-flex flex-column gap-4">
                                     {quiz.questions?.map((question, index) => {
@@ -367,7 +354,6 @@ export default function TakeQuizPage() {
                                 </div>
                             )}
 
-                            {/* Action Buttons */}
                             <div className="d-flex justify-content-center gap-3 mt-4">
                                 {canRetake && (
                                     <button onClick={handleRetake} className="btn btn-primary btn-lg px-4">

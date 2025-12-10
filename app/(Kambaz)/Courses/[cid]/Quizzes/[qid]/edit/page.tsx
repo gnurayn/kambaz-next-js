@@ -26,7 +26,7 @@ export default function QuizEditor() {
         try {
             const data = await client.findQuizById(qid as string);
             setQuiz(data);
-            setQuestions(data.questions || []); // ← Add this line
+            setQuestions(data.questions || []); 
         } catch (error) {
             console.error("Failed to load quiz:", error);
         } finally {
@@ -35,7 +35,7 @@ export default function QuizEditor() {
     };
     const handleSave = async () => {
         try {
-            const quizToSave = { ...quiz, questions }; // ← Include questions
+            const quizToSave = { ...quiz, questions }; 
             await client.updateQuiz(qid as string, quizToSave);
             alert("Quiz saved successfully!");
             router.push(`/Courses/${cid}/Quizzes/${qid}`);
@@ -47,7 +47,7 @@ export default function QuizEditor() {
 
     const handleSaveAndPublish = async () => {
         try {
-            const quizToSave = { ...quiz, questions, published: true }; // ← Include questions
+            const quizToSave = { ...quiz, questions, published: true };
             await client.updateQuiz(qid as string, quizToSave);
             alert("Quiz saved and published!");
             router.push(`/Courses/${cid}/Quizzes`);
@@ -80,7 +80,6 @@ export default function QuizEditor() {
 
     return (
         <div className="p-4">
-            {/* Header with Points, Published Status, and Ellipsis */}
             <div className="d-flex justify-content-end align-items-center mb-3">
                 <div className="d-flex align-items-center gap-3">
                     <span>Points {quiz.points}</span>
@@ -97,7 +96,6 @@ export default function QuizEditor() {
                 </div>
             </div>
 
-            {/* Tabs */}
             <Nav variant="tabs" className="mb-4">
                 <Nav.Item>
                     <Nav.Link
@@ -117,10 +115,8 @@ export default function QuizEditor() {
                 </Nav.Item>
             </Nav>
 
-            {/* Details Tab Content */}
             {activeTab === "details" && (
                 <div style={{ maxWidth: "600px" }}>
-                    {/* Title */}
                     <Form.Group className="mb-3">
                         <Form.Control
                             type="text"
@@ -131,7 +127,6 @@ export default function QuizEditor() {
                         />
                     </Form.Group>
 
-                    {/* Quiz Instructions */}
                     <Form.Group className="mb-3">
                         <Form.Label>Quiz Instructions:</Form.Label>
                         <Form.Control
@@ -143,7 +138,6 @@ export default function QuizEditor() {
                         />
                     </Form.Group>
 
-                    {/* Quiz Type */}
                     <Form.Group className="mb-3">
                         <div className="row align-items-center">
                             <div className="col-4">
@@ -163,7 +157,6 @@ export default function QuizEditor() {
                         </div>
                     </Form.Group>
 
-                    {/* Assignment Group */}
                     <Form.Group className="mb-3">
                         <div className="row align-items-center">
                             <div className="col-4">
@@ -183,11 +176,9 @@ export default function QuizEditor() {
                         </div>
                     </Form.Group>
 
-                    {/* Options Section */}
                     <div className="mb-4">
                         <h6 className="mb-3">Options</h6>
 
-                        {/* Shuffle Answers */}
                         <Form.Group className="mb-3">
                             <Form.Check
                                 type="checkbox"
@@ -197,7 +188,6 @@ export default function QuizEditor() {
                             />
                         </Form.Group>
 
-                        {/* Time Limit */}
                         <Form.Group className="mb-3">
                             <div className="d-flex align-items-center gap-2">
                                 <Form.Check
@@ -220,7 +210,6 @@ export default function QuizEditor() {
                             </div>
                         </Form.Group>
 
-                        {/* Allow Multiple Attempts */}
                         <Form.Group className="mb-3">
                             <Form.Check
                                 type="checkbox"
@@ -249,7 +238,6 @@ export default function QuizEditor() {
                             </Form.Group>
                         )}
 
-                        {/* Show Correct Answers */}
                         <Form.Group className="mb-3">
                             <div className="row align-items-center">
                                 <div className="col-4">
@@ -267,7 +255,6 @@ export default function QuizEditor() {
                             </div>
                         </Form.Group>
 
-                        {/* Access Code */}
                         <Form.Group className="mb-3">
                             <div className="row align-items-center">
                                 <div className="col-4">
@@ -284,7 +271,6 @@ export default function QuizEditor() {
                             </div>
                         </Form.Group>
 
-                        {/* One Question at a Time */}
                         <Form.Group className="mb-3">
                             <div className="row align-items-center">
                                 <div className="col-4">
@@ -302,7 +288,6 @@ export default function QuizEditor() {
                             </div>
                         </Form.Group>
 
-                        {/* Webcam Required */}
                         <Form.Group className="mb-3">
                             <div className="row align-items-center">
                                 <div className="col-4">
@@ -320,7 +305,6 @@ export default function QuizEditor() {
                             </div>
                         </Form.Group>
 
-                        {/* Lock Questions After Answering */}
                         <Form.Group className="mb-3">
                             <div className="row align-items-center">
                                 <div className="col-4">
@@ -339,11 +323,9 @@ export default function QuizEditor() {
                         </Form.Group>
                     </div>
 
-                    {/* Assign Section */}
                     <div className="border rounded p-3 mb-4">
                         <h6 className="mb-3">Assign</h6>
 
-                        {/* Assign to */}
                         <Form.Group className="mb-3">
                             <Form.Label>Assign to</Form.Label>
                             <div className="border rounded p-2 d-flex align-items-center gap-2">
@@ -351,7 +333,6 @@ export default function QuizEditor() {
                             </div>
                         </Form.Group>
 
-                        {/* Due */}
                         <Form.Group className="mb-3">
                             <Form.Label>Due</Form.Label>
                             <div className="d-flex gap-2">
@@ -370,7 +351,6 @@ export default function QuizEditor() {
                             </div>
                         </Form.Group>
 
-                        {/* Available from and Until */}
                         <div className="row">
                             <div className="col-6">
                                 <Form.Group className="mb-3">
@@ -414,7 +394,6 @@ export default function QuizEditor() {
                         </div>
                     </div>
 
-                    {/* Action Buttons */}
                     <div className="d-flex justify-content-end gap-2">
                         <Button variant="light" onClick={handleCancel}>
                             Cancel
@@ -429,7 +408,6 @@ export default function QuizEditor() {
                 </div>
             )}
 
-            {/* Questions Tab Content */}
             {activeTab === "questions" && (
                 <div>
                     <div className="mb-3">
@@ -467,7 +445,6 @@ export default function QuizEditor() {
                         </Dropdown>
                     </div>
 
-                    {/* List of Questions */}
                     {questions.map((q, index) => (
                         <div key={index}>
                             {editingQuestionIndex === index ? (
@@ -554,7 +531,6 @@ export default function QuizEditor() {
                         </div>
                     ))}
 
-                    {/* New Question Editor */}
                     {editingQuestionIndex === questions.length && (
                         <>
                             {newQuestionType === "multiple-choice" && (
@@ -596,14 +572,12 @@ export default function QuizEditor() {
                         </>
                     )}
 
-                    {/* Empty State */}
                     {questions.length === 0 && editingQuestionIndex === null && (
                         <div className="text-center py-5 text-muted">
                             <p>No questions yet. Click "+ New Question" to add one.</p>
                         </div>
                     )}
 
-                    {/* Save Buttons at Bottom */}
                     <hr className="my-4" />
                     <div className="d-flex justify-content-end gap-2">
                         <Button variant="light" onClick={handleCancel}>

@@ -42,8 +42,6 @@ export const updateQuiz = async (quizId: string, updates: any) => {
     return response.data;
 };
 
-// ===== Quiz Attempt Functions =====
-
 export const submitQuizAttempt = async (quizId: string, answers: Record<number, string>) => {
     const response = await axiosWithToken.post(`${HTTP_SERVER}/api/quizzes/${quizId}/attempts`, { answers });
     return response.data;

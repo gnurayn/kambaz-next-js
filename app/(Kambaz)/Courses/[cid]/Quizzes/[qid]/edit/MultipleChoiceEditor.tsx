@@ -104,7 +104,6 @@ export default function MultipleChoiceEditor({ question, onSave, onCancel }: Mul
 
     return (
         <div className="border rounded p-4 mb-3">
-            {/* Top Row: Title, Type, Points */}
             <div className="d-flex align-items-center gap-3 mb-3">
                 <Form.Control
                     type="text"
@@ -137,7 +136,6 @@ export default function MultipleChoiceEditor({ question, onSave, onCancel }: Mul
                 Enter your question and multiple answers, then select the one correct answer.
             </p>
 
-            {/* Question */}
             <Form.Group className="mb-3">
                 <Form.Label className="fw-bold">Question:</Form.Label>
                 <Form.Control
@@ -149,7 +147,6 @@ export default function MultipleChoiceEditor({ question, onSave, onCancel }: Mul
                 />
             </Form.Group>
 
-            {/* Answers */}
             <Form.Group className="mb-3">
                 <Form.Label className="fw-bold">Answers:</Form.Label>
                 {formData.answers.map((answer, index) => (
@@ -185,7 +182,6 @@ export default function MultipleChoiceEditor({ question, onSave, onCancel }: Mul
                 </Button>
             </Form.Group>
 
-            {/* Action Buttons */}
             <div className="d-flex gap-2 mt-3">
                 <Button variant="secondary" onClick={onCancel}>
                     Cancel

@@ -50,7 +50,6 @@ export default function QuizControls({ onQuizCreated, searchQuery, onSearchChang
             const createdQuiz = await client.createQuizForCourse(cid as string, newQuiz);
             onQuizCreated(createdQuiz);
 
-            // Navigate to quiz details page
             router.push(`/Courses/${cid}/Quizzes/${createdQuiz._id}`);
         } catch (error) {
             console.error("Failed to create quiz:", error);
@@ -93,7 +92,6 @@ export default function QuizControls({ onQuizCreated, searchQuery, onSearchChang
                     Quiz
                 </Button>
 
-                {/* Static Ellipsis (no dropdown) */}
                 <Button
                     variant="secondary"
                     size="lg"

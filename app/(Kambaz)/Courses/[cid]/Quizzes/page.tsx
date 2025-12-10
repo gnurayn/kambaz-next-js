@@ -21,7 +21,6 @@ export default function QuizzesPage() {
     try {
       const data = await client.findQuizzesForCourse(cid as string);
 
-      // If student, fetch latest attempt scores for each quiz
       if (isStudent) {
         const quizzesWithScores = await Promise.all(
           data.map(async (quiz: any) => {
@@ -33,7 +32,6 @@ export default function QuizzesPage() {
                 lastAttemptDate: latestAttempt ? latestAttempt.submittedAt : undefined
               };
             } catch (error) {
-              // No attempt yet, return quiz without score
               return quiz;
             }
           })

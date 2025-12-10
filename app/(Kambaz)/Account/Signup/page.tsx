@@ -18,19 +18,15 @@ export default function Signup() {
       const response = await client.signup(user);
       if (!response) return;
 
-      // Extract user and token from response
       const { user: newUser, token } = response;
 
-      // Store user in Redux
       dispatch(setCurrentUser(newUser));
 
-      // Store both user and token in localStorage
       localStorage.setItem('currentUser', JSON.stringify(newUser));
       localStorage.setItem('token', token);
 
       console.log("✅ Signed up as:", newUser.username, "Role:", newUser.role);
 
-      // Redirect to profile
       router.push("/Account/Profile");
     } catch (error: any) {
       console.error("❌ Signup failed:", error);

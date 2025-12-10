@@ -34,7 +34,8 @@ export default function QuizDetails() {
 
     const formatDate = (dateStr: string) => {
         if (!dateStr) return "";
-        const date = new Date(dateStr);
+        const [year, month, day] = dateStr.split('-');
+        const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
         return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     };
 
@@ -48,7 +49,6 @@ export default function QuizDetails() {
 
     return (
         <div className="p-4">
-            {/* Header Buttons */}
             <div className="d-flex justify-content-end gap-2 mb-3">
                 <Button
                     variant="outline-secondary"
@@ -66,10 +66,8 @@ export default function QuizDetails() {
 
             <hr />
 
-            {/* Quiz Title */}
             <h2 className="mb-4">{quiz.title}</h2>
 
-            {/* Faculty View - Detailed Quiz Info */}
             {canEditCourse && (
                 <div className="border rounded p-4" style={{ maxWidth: "800px" }}>
                     <div className="row mb-3">
@@ -144,7 +142,6 @@ export default function QuizDetails() {
                         <div className="col-7">{quiz.lockQuestionsAfterAnswering ? "Yes" : "No"}</div>
                     </div>
 
-                    {/* Dates Table */}
                     <table className="table mt-4">
                         <thead>
                             <tr>
@@ -166,7 +163,6 @@ export default function QuizDetails() {
                 </div>
             )}
 
-            {/* Student View - Simple Info */}
             {isStudent && (
                 <div>
                     {quiz.description && (

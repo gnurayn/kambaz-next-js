@@ -9,7 +9,7 @@ interface TrueFalseQuestion {
     points: number;
     question: string;
     correctAnswer: boolean;
-    answers?: never; // Explicitly exclude answers for true/false
+    answers?: never; 
 }
 
 interface TrueFalseEditorProps {
@@ -39,7 +39,6 @@ export default function TrueFalseEditor({ question, onSave, onCancel }: TrueFals
             return;
         }
 
-        // Ensure we're only sending the correct fields for true/false questions
         const questionToSave: TrueFalseQuestion = {
             type: "true-false",
             title: formData.title,
@@ -48,7 +47,6 @@ export default function TrueFalseEditor({ question, onSave, onCancel }: TrueFals
             correctAnswer: formData.correctAnswer,
         };
 
-        // Explicitly remove answers field if it exists
         const { answers, ...cleanQuestion } = questionToSave as any;
 
         onSave(cleanQuestion);
@@ -56,7 +54,6 @@ export default function TrueFalseEditor({ question, onSave, onCancel }: TrueFals
 
     return (
         <div className="border rounded p-4 mb-3">
-            {/* Top Row: Title, Type, Points */}
             <div className="d-flex align-items-center gap-3 mb-3">
                 <Form.Control
                     type="text"
@@ -87,7 +84,6 @@ export default function TrueFalseEditor({ question, onSave, onCancel }: TrueFals
                 Enter your question text, then select if True or False is the correct answer.
             </p>
 
-            {/* Question */}
             <Form.Group className="mb-3">
                 <Form.Label className="fw-bold">Question:</Form.Label>
                 <Form.Control
@@ -99,7 +95,6 @@ export default function TrueFalseEditor({ question, onSave, onCancel }: TrueFals
                 />
             </Form.Group>
 
-            {/* Answers */}
             <Form.Group className="mb-3">
                 <Form.Label className="fw-bold">Answers:</Form.Label>
 
@@ -140,7 +135,6 @@ export default function TrueFalseEditor({ question, onSave, onCancel }: TrueFals
                 </div>
             </Form.Group>
 
-            {/* Action Buttons */}
             <div className="d-flex gap-2 mt-3">
                 <Button variant="secondary" onClick={onCancel}>
                     Cancel

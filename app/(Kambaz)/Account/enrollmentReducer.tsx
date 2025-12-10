@@ -16,8 +16,6 @@ const enrollmentSlice = createSlice({
     reducers: {
         setUser: (state, { payload: userId }: { payload: string }) => {
             state.userId = userId;
-            // Remove the line that loads from enrollmentsData.json
-            // The enrollments will be loaded via API in fetchEnrollments
         },
 
         enrollCourse: (state, { payload: courseId }: { payload: string }) => {

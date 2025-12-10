@@ -16,7 +16,6 @@ const Chart = RiBarChart2Fill as React.ElementType;
 const Announcement = TfiAnnouncement as React.ElementType;
 const Notifications = IoMdNotifications as React.ElementType;
 
-{/* Find more icons */ }
 export default function CourseStatus() {
     return (
         <div id="wd-course-status" style={{ width: "350px" }}>

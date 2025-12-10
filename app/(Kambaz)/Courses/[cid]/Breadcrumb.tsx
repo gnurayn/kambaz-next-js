@@ -11,12 +11,10 @@ export default function Breadcrumb({ course }: { course: { name: string } | unde
     const [assignmentTitle, setAssignmentTitle] = useState<string>("");
 
     useEffect(() => {
-        // If we're on a quiz page, fetch the quiz title
         if (pathname.includes("/Quizzes/") && params.qid) {
             loadQuizTitle();
         }
 
-        // If we're on an assignment page, fetch the assignment title
         if (pathname.includes("/Assignments/") && params.aid) {
             loadAssignmentTitle();
         }
@@ -45,12 +43,10 @@ export default function Breadcrumb({ course }: { course: { name: string } | unde
     const getBreadcrumb = () => {
         const segments = pathname.split("/").filter(Boolean);
 
-        // Check if we're in Quizzes section
         if (pathname.includes("/Quizzes")) {
             const parts = [course?.name];
             parts.push("Quizzes");
 
-            // If we're on a specific quiz page (details or edit)
             if (params.qid) {
                 parts.push(quizTitle || "Untitled Quiz");
             }
@@ -58,12 +54,10 @@ export default function Breadcrumb({ course }: { course: { name: string } | unde
             return parts.join(" > ");
         }
 
-        // Check if we're in Assignments section
         if (pathname.includes("/Assignments")) {
             const parts = [course?.name];
             parts.push("Assignments");
 
-            // If we're on a specific assignment page (details or edit)
             if (params.aid) {
                 parts.push(assignmentTitle || "Untitled Assignment");
             }
@@ -71,12 +65,10 @@ export default function Breadcrumb({ course }: { course: { name: string } | unde
             return parts.join(" > ");
         }
 
-        // Check if we're in Modules section
         if (pathname.includes("/Modules")) {
             return `${course?.name} > Modules`;
         }
 
-        // Default: show last segment
         return `${course?.name} > ${segments[segments.length - 1]}`;
     };
 

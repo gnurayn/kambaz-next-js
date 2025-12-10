@@ -62,7 +62,6 @@ export default function QuizPreviewPage() {
             const quizData = await client.findQuizById(qid);
             setQuiz(quizData);
 
-            // Initialize answers object
             const initialAnswers: Record<number, string> = {};
             quizData.questions?.forEach((_: Question, index: number) => {
                 initialAnswers[index] = "";
@@ -184,7 +183,6 @@ export default function QuizPreviewPage() {
 
     return (
         <div className="container" style={{ maxWidth: "900px", padding: "2rem" }}>
-            {/* Header */}
             <div className="d-flex justify-content-between align-items-start mb-4">
                 <div>
                     <h1 className="mb-2">{quiz.title} - Preview</h1>
@@ -202,7 +200,6 @@ export default function QuizPreviewPage() {
                 )}
             </div>
 
-            {/* Quiz Info */}
             {!submitted && (
                 <div className="bg-light p-3 rounded mb-4">
                     <p className="mb-1">
@@ -219,10 +216,8 @@ export default function QuizPreviewPage() {
                 </div>
             )}
 
-            {/* Questions or Results */}
             {!submitted ? (
                 <>
-                    {/* Questions */}
                     <div className="d-flex flex-column gap-4">
                         {quiz.questions?.map((question, index) => (
                             <div key={index} className="card">
@@ -234,7 +229,6 @@ export default function QuizPreviewPage() {
 
                                     <p className="mb-3 fw-semibold">{question.question}</p>
 
-                                    {/* Multiple Choice */}
                                     {question.type === "multiple-choice" && question.answers && (
                                         <div className="d-flex flex-column gap-2">
                                             {question.answers.map((answer, answerIndex) => (
@@ -266,7 +260,6 @@ export default function QuizPreviewPage() {
                                         </div>
                                     )}
 
-                                    {/* True/False */}
                                     {question.type === "true-false" && (
                                         <div className="d-flex flex-column gap-2">
                                             {["True", "False"].map((option) => (
@@ -298,7 +291,6 @@ export default function QuizPreviewPage() {
                                         </div>
                                     )}
 
-                                    {/* Fill in the Blank */}
                                     {question.type === "fill-in-blank" && (
                                         <input
                                             type="text"
@@ -313,7 +305,6 @@ export default function QuizPreviewPage() {
                         ))}
                     </div>
 
-                    {/* Submit Button */}
                     <div className="text-center mt-4">
                         <button
                             onClick={handleSubmit}
@@ -325,7 +316,6 @@ export default function QuizPreviewPage() {
                 </>
             ) : (
                 <>
-                    {/* Results Summary */}
                     <div className="card mb-4">
                         <div className="card-body">
                             <h2 className="card-title mb-4">Quiz Results</h2>
@@ -342,7 +332,6 @@ export default function QuizPreviewPage() {
                         </div>
                     </div>
 
-                    {/* Detailed Results */}
                     <div className="d-flex flex-column gap-4">
                         {quiz.questions?.map((question, index) => {
                             const correct = isAnswerCorrect(question, index);
@@ -393,7 +382,6 @@ export default function QuizPreviewPage() {
                         })}
                     </div>
 
-                    {/* Action Buttons */}
                     <div className="d-flex justify-content-center gap-3 mt-4">
                         <button
                             onClick={() => {

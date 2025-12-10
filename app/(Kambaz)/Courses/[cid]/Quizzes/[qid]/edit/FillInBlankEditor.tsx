@@ -39,7 +39,6 @@ export default function FillInBlankEditor({ question, onSave, onCancel }: FillIn
             return;
         }
 
-        // Filter out empty answers
         const validAnswers = formData.possibleAnswers.filter(a => a.trim() !== "");
         if (validAnswers.length === 0) {
             alert("Please enter at least one possible answer");
@@ -87,7 +86,6 @@ export default function FillInBlankEditor({ question, onSave, onCancel }: FillIn
 
     return (
         <div className="border rounded p-4 mb-3">
-            {/* Top Row: Title, Type, Points */}
             <div className="d-flex align-items-center gap-3 mb-3">
                 <Form.Control
                     type="text"
@@ -120,7 +118,6 @@ export default function FillInBlankEditor({ question, onSave, onCancel }: FillIn
                 Enter your question text, then define all possible correct answers for the blank.
             </p>
 
-            {/* Question */}
             <Form.Group className="mb-3">
                 <Form.Label className="fw-bold">Question:</Form.Label>
                 <Form.Control
@@ -132,7 +129,6 @@ export default function FillInBlankEditor({ question, onSave, onCancel }: FillIn
                 />
             </Form.Group>
 
-            {/* Answers */}
             <Form.Group className="mb-3">
                 <Form.Label className="fw-bold">Answers:</Form.Label>
                 {formData.possibleAnswers.map((answer, index) => (
@@ -166,7 +162,6 @@ export default function FillInBlankEditor({ question, onSave, onCancel }: FillIn
                 </Button>
             </Form.Group>
 
-            {/* Action Buttons */}
             <div className="d-flex gap-2 mt-3">
                 <Button variant="secondary" onClick={onCancel}>
                     Cancel

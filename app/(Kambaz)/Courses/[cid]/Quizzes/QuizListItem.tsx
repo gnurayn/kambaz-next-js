@@ -35,8 +35,13 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
 
     const getAvailabilityStatus = () => {
         const now = new Date();
-        const availableDate = new Date(quiz.availableFromDate);
-        const untilDate = new Date(quiz.availableUntilDate);
+        now.setHours(0, 0, 0, 0);
+
+        const [year1, month1, day1] = quiz.availableFromDate.split('-');
+        const availableDate = new Date(parseInt(year1), parseInt(month1) - 1, parseInt(day1));
+
+        const [year2, month2, day2] = quiz.availableUntilDate.split('-');
+        const untilDate = new Date(parseInt(year2), parseInt(month2) - 1, parseInt(day2));
 
         if (now > untilDate) {
             return { text: "Closed", color: "#000" };
@@ -70,9 +75,10 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
         onPublishToggle(quiz._id, !quiz.published);
     };
 
-    // Format date from "2023-09-21" to "Sep 21"
     const formatDate = (dateStr: string) => {
-        const date = new Date(dateStr);
+        if (!dateStr) return "";
+        const [year, month, day] = dateStr.split('-');
+        const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
         return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     };
 
@@ -81,7 +87,6 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
             className="d-flex align-items-center border-bottom py-3 position-relative"
             style={{ paddingLeft: "20px", paddingRight: "20px" }}
         >
-            {/* Green left border - same color as checkmark */}
             <div
                 style={{
                     position: "absolute",
@@ -89,11 +94,10 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
                     top: 0,
                     bottom: 0,
                     width: "4px",
-                    backgroundColor: "#198754" // Bootstrap success color
+                    backgroundColor: "#198754"
                 }}
             />
 
-            {/* Gray right border - 2px */}
             <div
                 style={{
                     position: "absolute",
@@ -105,12 +109,10 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
                 }}
             />
 
-            {/* Left Icon - Rocket - centered vertically */}
             <div className="me-3">
                 <RxRocket className="text-success" style={{ fontSize: "24px" }} />
             </div>
 
-            {/* Quiz Content */}
             <div className="flex-grow-1">
                 <div className="d-flex justify-content-between align-items-center">
                     <div>
@@ -145,9 +147,7 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
                         </div>
                     </div>
 
-                    {/* Right Side: Checkmark/🚫 + Three Dots Dropdown - centered */}
                     <div className="d-flex align-items-center gap-2">
-                        {/* Published: Green Checkmark, Unpublished: 🚫 */}
                         {canEditCourse && (
                             <button
                                 onClick={handlePublishToggle}
@@ -162,7 +162,6 @@ export default function QuizListItem({ quiz, courseId, onDelete, onPublishToggle
                             </button>
                         )}
 
-                        {/* Three Dots with Dropdown - centered */}
                         {canEditCourse && (
                             <Dropdown align="end">
                                 <Dropdown.Toggle
