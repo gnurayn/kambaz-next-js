@@ -53,7 +53,7 @@ export default function Assignments() {
 
       dispatch(setAssignments(newAssignments));
     } catch (error) {
-      console.error("❌ Error deleting assignment:", error);
+      console.error("Error deleting assignment:", error);
     }
   };
 

@@ -25,11 +25,11 @@ export default function Signup() {
       localStorage.setItem('currentUser', JSON.stringify(newUser));
       localStorage.setItem('token', token);
 
-      console.log("✅ Signed up as:", newUser.username, "Role:", newUser.role);
+      console.log("Signed up as:", newUser.username, "Role:", newUser.role);
 
       router.push("/Account/Profile");
     } catch (error: any) {
-      console.error("❌ Signup failed:", error);
+      console.error("Signup failed:", error);
       const message = error.response?.data?.message || "Signup failed";
       alert(message);
     }

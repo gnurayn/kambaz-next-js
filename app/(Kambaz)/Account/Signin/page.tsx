@@ -25,11 +25,11 @@ export default function Signin() {
       localStorage.setItem('currentUser', JSON.stringify(user));
       localStorage.setItem('token', token);
 
-      console.log("✅ Signed in as:", user.username, "Role:", user.role);
+      console.log("Signed in as:", user.username, "Role:", user.role);
 
       router.push("/Dashboard");
     } catch (error) {
-      console.error("❌ Signin failed:", error);
+      console.error("Signin failed:", error);
       alert("Signin failed. Please check your credentials.");
     }
   };
